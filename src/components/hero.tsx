@@ -23,8 +23,8 @@ export const Hero = () => {
           className="object-cover"
         />
       </div>
-      <h1 className="text-7xl text-foreground leading-normal h-full ">
-        Hi there, <span className="text-primary">I&apos;m Joshua</span>, your{' '}
+      <h1 className="text-7xl text-foreground leading-tight">
+        Hi there, <span className="text-primary">I&apos;m Joshua</span>, and{' '}
         <TextSwap
           texts={texts}
           duration={3000}

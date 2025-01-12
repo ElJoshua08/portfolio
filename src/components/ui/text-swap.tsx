@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import TextTransition from 'react-text-transition';
+import TypingAnimation from './typing-animation';
 
 interface TextSwapProps extends React.HTMLAttributes<HTMLSpanElement> {
   texts: string[];
@@ -21,7 +21,7 @@ export const TextSwap = ({ texts, duration, ...props }: TextSwapProps) => {
 
   return (
     <span {...props}>
-      <TextTransition>{texts[index]}</TextTransition>
+      <TypingAnimation>{texts[index]}</TypingAnimation>
     </span>
   );
 };
