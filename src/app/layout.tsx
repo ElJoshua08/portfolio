@@ -26,7 +26,7 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem
         >
-          <div className="absolute bottom-0 left-0 right-0 -top-[600px] bg-[radial-gradient(circle_1200px_at_50%_150px,#4E501B,transparent)] -z-10"></div>
+          {/* <div className="absolute bottom-0 left-0 right-0 -top-[600px] bg-[radial-gradient(circle_1200px_at_50%_150px,#4E501B,transparent)] -z-10"></div> */}
           {children}
         </ThemeProvider>
       </body>
