@@ -2,12 +2,12 @@ import { TypingTextSwap } from './ui/typing-text-swap';
 
 export const Hero = () => {
   const texts = [
-    "I'm your Full Stack Developer | .",
-    "I'm your Web Developer",
-    "I'm your Designer",
-    "I'm your Creative Thinker",
-    "I'm your Problem Solver",
-    "I'm your Agile Partner",
+    "I'm your Full Stack Developer.",
+    "I'm your Web Developer.",
+    "I'm your Designer.",
+    "I'm your Creative Thinker.",
+    "I'm your Problem Solver.",
+    "I'm your Agile Partner.",
   ];
 
   return (
@@ -41,7 +41,11 @@ export const Hero = () => {
         <span>
           <TypingTextSwap
             texts={texts}
-            duration={3000}
+            typingSpeed={350}
+            randomness={0.08}
+            deletingSpeed={100}
+            pauseDuration={3000}
+            showCursor
           />
         </span>
       </h1>
