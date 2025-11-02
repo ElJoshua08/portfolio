@@ -25,7 +25,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
     >
-      <body className={`${bodyFont.variable} antialiased`}>
+      <body className={`${bodyFont.variable} antialiased bg-emerald-500`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

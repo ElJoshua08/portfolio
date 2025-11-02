@@ -25,7 +25,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="absolute top-1/2 left-1/2 -translate-1/2 ">
         <pre
           data-text={ASCII_BANNER}
-          className="glitch text-5xl font-mono leading-none rotate-25 select-none text-border"
+          className="glitch text-5xl font-mono leading-none rotate-25 select-none text-white"
         >
           {ASCII_BANNER}
         </pre>

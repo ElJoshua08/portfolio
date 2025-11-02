@@ -1,7 +1,6 @@
 "use client";
 
 import { PageContent } from "@/components/page-content";
-import { PageDecoration } from "@/components/page-decoration";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -79,9 +78,10 @@ export default function ContactPage() {
     <PageContent>
       {/* <PageDecoration numberOfElements={3} /> */}
 
-      <div className="flex items-center justify-center h-full flex-col gap-y-6">
-        <span className="text-2xl font-bold tracking-wider">
-          Let&apos;s get in touch!
+      <div className="flex items-center justify-center h-full flex-col gap-y-12">
+        <span className="text-4xl font-bold tracking-wider">
+          Let&apos;s get in{" "}
+          <span className=" font-extrabold text-primary">touch!</span>
         </span>
 
         <Card className="md:min-w-xl bg-card">
@@ -113,8 +113,8 @@ export default function ContactPage() {
                         <FormLabel>Subject</FormLabel>
                         <FormControl>
                           <Select
-                            value={field.value}
                             onValueChange={field.onChange}
+                            {...field}
                           >
                             <SelectTrigger className="w-full">
                               <SelectValue placeholder="What do you need?" />
