@@ -3,19 +3,18 @@
 import { transporter } from "@/src/services/email/utils";
 
 export async function sendEmail(email: string, subject: string, body: string) {
+  console.log(process.env.EMAIL_USER, process.env.EMAIL_PASSWORD);
+
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+      to: email === "default" ? process.env.EMAIL_USER : email,
       subject,
-      html: `
-        <p>You have a new contact form submission:</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${body}</p>
-      `,
+      html: body,
     });
   } catch (error) {
-    console.error(error);
+    return { error: error || "Unknown error occurred" };
   }
+
+  return {};
 }

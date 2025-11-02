@@ -21,10 +21,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { sendEmailSchema, SendEmailSchema } from "@/src/schemas/email/send";
+import { contactViaEmail } from "@/src/use-cases/contact-via-email";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function ProjectsPage() {
   const form = useForm<SendEmailSchema>({
@@ -50,7 +52,22 @@ export default function ProjectsPage() {
   // Handlers
 
   async function handleSubmit(data: SendEmailSchema) {
-    console.log("Submitting form data:", data);
+    const { error } = await contactViaEmail(data);
+
+    if (error) {
+      toast.error("Wooops, something went wrong.", {
+        action: {
+          label: "Copy email",
+          onClick: () => {
+            navigator.clipboard.writeText("devbyjoshua@gmail.com");
+          },
+        },
+      });
+
+      return;
+    }
+
+    toast.success("Message sent successfully!");
   }
 
   return (
@@ -60,16 +77,16 @@ export default function ProjectsPage() {
           Let&apos;s get in touch!
         </span>
 
-        <Card className="min-w-xl">
+        <Card className="md:min-w-xl">
           <CardContent>
             <Form {...form}>
               <div className="flex flex-col gap-y-10">
-                <div className="flex gap-x-10">
+                <div className="flex gap-x-10 flex-wrap">
                   <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
-                      <FormItem className="flex-1">
+                      <FormItem className="flex-1 min-w-fit">
                         <FormLabel>Name</FormLabel>
                         <FormControl>
                           <Input
