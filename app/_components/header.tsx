@@ -1,3 +1,4 @@
+import { ASCII_BANNER } from "@/src/contants";
 import Link from "next/link";
 
 export const Header = () => {
@@ -7,12 +8,7 @@ export const Header = () => {
       <div className="shrink-0 pr-4">
         <Link href="/">
           <pre className="text-primary text-2xl leading-none font-mono animate-fade-in  ">
-            {`       ██╗
-       ██║
-       ██║
-  ██   ██║
-  ╚█████╔╝
-   ╚════╝`}
+            {ASCII_BANNER}
           </pre>
         </Link>
       </div>

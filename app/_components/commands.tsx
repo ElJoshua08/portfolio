@@ -1,6 +1,7 @@
 "use client";
 
 import { TypewriterText, TypewriterWords } from "@/components/typewriter";
+import { ASCII_ART } from "@/src/contants";
 import { useTheme } from "next-themes";
 
 export const useCommands = () => {
@@ -233,16 +234,7 @@ export const useCommands = () => {
         <>
           <br />
           <TypewriterWords delay={5}>
-            <pre className="leading-[1.19rem]">
-              {`
-                     ██╗ ██████╗ ███████╗██╗  ██╗██╗   ██╗ █████╗     ██████╗ ███████╗██╗   ██╗
-                     ██║██╔═══██╗██╔════╝██║  ██║██║   ██║██╔══██╗    ██╔══██╗██╔════╝██║   ██║
-█████╗█████╗         ██║██║   ██║███████╗███████║██║   ██║███████║    ██║  ██║█████╗  ██║   ██║    █████╗█████╗
-╚════╝╚════╝    ██   ██║██║   ██║╚════██║██╔══██║██║   ██║██╔══██║    ██║  ██║██╔══╝  ╚██╗ ██╔╝    ╚════╝╚════╝
-                ╚█████╔╝╚██████╔╝███████║██║  ██║╚██████╔╝██║  ██║    ██████╔╝███████╗ ╚████╔╝
-                 ╚════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝    ╚═════╝ ╚══════╝  ╚═══╝
-                                                                                                               `}
-            </pre>
+            <pre className="leading-[1.19rem]">{ASCII_ART}</pre>
           </TypewriterWords>
         </>
       ),

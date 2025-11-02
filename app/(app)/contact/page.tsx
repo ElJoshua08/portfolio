@@ -1,6 +1,7 @@
 "use client";
 
 import { PageContent } from "@/components/page-content";
+import { PageDecoration } from "@/components/page-decoration";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -23,12 +24,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { sendEmailSchema, SendEmailSchema } from "@/src/schemas/email/send";
 import { contactViaEmail } from "@/src/use-cases/contact-via-email";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export default function ProjectsPage() {
+export default function ContactPage() {
   const form = useForm<SendEmailSchema>({
     resolver: zodResolver(sendEmailSchema),
     defaultValues: {
@@ -38,20 +39,21 @@ export default function ProjectsPage() {
       message: "",
     },
   });
+  const [cooldown, setCooldown] = useState(0);
+  const isSubmitting = form.formState.isSubmitting;
 
-  const [showContent, setShowContent] = useState(false);
-
+  // cooldown timer
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
+    if (cooldown > 0) {
+      const interval = setInterval(() => setCooldown((prev) => prev - 1), 1000);
+      return () => clearInterval(interval);
+    }
+  }, [cooldown]);
 
   // Handlers
-
   async function handleSubmit(data: SendEmailSchema) {
+    if (cooldown > 0) return; // block accidental resends
+
     const { error } = await contactViaEmail(data);
 
     if (error) {
@@ -63,21 +65,26 @@ export default function ProjectsPage() {
           },
         },
       });
-
       return;
     }
 
     toast.success("Message sent successfully!");
+    form.reset();
+
+    // Start a 30-second cooldown
+    setCooldown(30);
   }
 
   return (
-    <PageContent showContent={showContent}>
+    <PageContent>
+      {/* <PageDecoration numberOfElements={3} /> */}
+
       <div className="flex items-center justify-center h-full flex-col gap-y-6">
         <span className="text-2xl font-bold tracking-wider">
           Let&apos;s get in touch!
         </span>
 
-        <Card className="md:min-w-xl">
+        <Card className="md:min-w-xl bg-card">
           <CardContent>
             <Form {...form}>
               <div className="flex flex-col gap-y-10">
@@ -171,12 +178,24 @@ export default function ProjectsPage() {
               </div>
             </Form>
           </CardContent>
-          <CardFooter className="flex justify-end mt-4 border-t">
+
+          {/* Footer */}
+          <CardFooter className="flex justify-between items-center mt-4 border-t">
+            <div className="text-muted-foreground text-sm fade-in-100">
+              {cooldown > 0 && <>Wait {cooldown}s</>}
+            </div>
             <Button
-              className="min-w-[120px]"
+              className="min-w-[120px] flex items-center justify-center gap-2"
               onClick={form.handleSubmit(handleSubmit)}
+              disabled={isSubmitting || cooldown > 0}
             >
-              Send <ChevronRight />
+              {isSubmitting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <>
+                  Send <ChevronRight className="w-4 h-4" />
+                </>
+              )}
             </Button>
           </CardFooter>
         </Card>

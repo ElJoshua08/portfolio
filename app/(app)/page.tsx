@@ -3,23 +3,10 @@
 import { Header } from "@/app/_components/header";
 import { Terminal } from "@/app/_components/terminal";
 import { PageContent } from "@/components/page-content";
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [showContent, setShowContent] = useState(false);
-
-  useEffect(() => {
-    const contentTimer = setTimeout(() => {
-      setShowContent(true);
-    }, 500);
-
-    return () => {
-      clearTimeout(contentTimer);
-    };
-  }, []);
-
   return (
-    <PageContent showContent={showContent}>
+    <PageContent>
       {/* Header Component */}
       <Header />
 
@@ -30,3 +17,4 @@ export default function Home() {
     </PageContent>
   );
 }
+

@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader } from "@/app/_components/loader";
+import { ASCII_BANNER } from "@/src/contants";
 import { useEffect, useState } from "react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
@@ -23,20 +24,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <>
       <div className="absolute top-1/2 left-1/2 -translate-1/2 ">
         <pre
-          data-text={`     ██╗
-     ██║
-     ██║
-██   ██║
-╚█████╔╝
- ╚════╝`}
+          data-text={ASCII_BANNER}
           className="glitch text-5xl font-mono leading-none rotate-25 select-none text-border"
         >
-          {`     ██╗
-     ██║
-     ██║
-██   ██║
-╚█████╔╝
- ╚════╝`}
+          {ASCII_BANNER}
         </pre>
       </div>
       {children}
