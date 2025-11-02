@@ -33,7 +33,6 @@ export const UserMessageEmail = ({
     >
       <Container
         style={{
-          
           borderRadius: "8px",
           padding: "32px",
           maxWidth: "600px",

@@ -26,7 +26,7 @@ export const ThanksEmail = ({ name }: ThanksEmailProps) => (
     >
       <Container
         style={{
-          backgroundColor: "#c6c6c6",
+          backgroundColor: "#06cca3",
           borderRadius: "8px",
           padding: "32px",
           maxWidth: "600px",
