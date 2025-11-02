@@ -1,10 +1,8 @@
 "use client";
 
-import React from "react";
-
+import React, { useEffect, useRef, useState } from "react";
 import { useCommands } from "@/app/_components/commands";
 import { TypewriterText, TypewriterWelcome } from "@/components/typewriter";
-import { useEffect, useRef, useState } from "react";
 
 type CommandOutput = {
   command: string;
@@ -17,10 +15,13 @@ export const Terminal = () => {
 
   const [history, setHistory] = useState<CommandOutput[]>([]);
   const [input, setInput] = useState("");
+  const [historyIndex, setHistoryIndex] = useState<number | null>(null);
   const [showWelcome, setShowWelcome] = useState(false);
+
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Mostrar mensaje de bienvenida
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowWelcome(true);
@@ -50,16 +51,27 @@ export const Terminal = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Auto-scroll al fondo
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [history]);
 
+  // Manejar envío de comando
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     const trimmedInput = input.trim().toLowerCase();
-    if (!trimmedInput) return;
+    if (!trimmedInput) return; // Ignora comandos vacíos o con solo espacios
+
+    // Evitar duplicados consecutivos
+    const lastCommand = history[history.length - 1]?.command;
+    if (lastCommand === trimmedInput) {
+      setInput("");
+      setHistoryIndex(null);
+      return;
+    }
 
     const [cmd, ...args] = trimmedInput.split(" ");
     const commandKey = cmd.toLowerCase();
@@ -68,6 +80,7 @@ export const Terminal = () => {
     if (commandKey === "clear") {
       setHistory([]);
       setInput("");
+      setHistoryIndex(null);
       return;
     }
 
@@ -92,11 +105,45 @@ export const Terminal = () => {
     ]);
 
     setInput("");
+    setHistoryIndex(null);
+  };
+
+  // Navegación con ArrowUp / ArrowDown
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (history.length === 0) return;
+
+      setHistoryIndex((prev) => {
+        const newIndex =
+          prev === null ? history.length - 1 : Math.max(0, prev - 1);
+        setInput(history[newIndex]?.command || "");
+        return newIndex;
+      });
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (history.length === 0) return;
+
+      setHistoryIndex((prev) => {
+        if (prev === null) return null;
+        const newIndex = prev + 1 >= history.length ? null : prev + 1;
+
+        setInput(newIndex === null ? "" : history[newIndex]?.command || "");
+        return newIndex;
+      });
+    }
+  };
+
+  // Reset de índice si el usuario empieza a escribir manualmente
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value);
+    if (historyIndex !== null) setHistoryIndex(null);
   };
 
   return (
     <div className="h-full flex flex-col">
-      {/* Terminal Content */}
       <div
         className="p-4 flex-1 overflow-y-auto scroll-smooth"
         ref={scrollRef}
@@ -118,7 +165,6 @@ export const Terminal = () => {
             </div>
           ))}
 
-          {/* Input Line */}
           {showWelcome && (
             <form
               onSubmit={handleSubmit}
@@ -129,7 +175,8 @@ export const Terminal = () => {
                 ref={inputRef}
                 type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={handleChange}
+                onKeyDown={handleKeyDown}
                 className="flex-1 bg-transparent outline-none text-foreground caret-muted-foreground"
                 autoFocus
                 spellCheck={false}
