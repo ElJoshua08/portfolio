@@ -1,3 +1,5 @@
+import { ComponentType, SVGProps } from "react";
+
 export type Project = {
   title: string;
   description: string;
@@ -6,10 +8,19 @@ export type Project = {
     website?: string;
   };
   images: {
-    thumbnails: {
-      phone: string;
-      tablet: string;
-      desktop: string;
+    dark: {
+      thumbnails: {
+        phone: string;
+        tablet: string;
+        desktop: string;
+      };
+    };
+    light: {
+      thumbnails: {
+        phone: string;
+        tablet: string;
+        desktop: string;
+      };
     };
   };
   tools: Tool[];
@@ -19,5 +30,5 @@ export type Project = {
 export type Tool = {
   name: string;
   description: string;
-  url: string;
+  Icon: ComponentType<SVGProps<SVGSVGElement>>;
 };

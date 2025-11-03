@@ -1,6 +1,9 @@
 "use client";
 
 import { Project } from "@/app/(app)/projects/_components/project";
+import { NextJSIcon } from "@/components/icons/nextjs";
+import { TailwindIcon } from "@/components/icons/tailwind";
+import { TypeScriptIcon } from "@/components/icons/typescript";
 import { PageContent } from "@/components/page-content";
 
 export default function ProjectsPage() {
@@ -24,27 +27,36 @@ export default function ProjectsPage() {
               website: "https://devbyjoshua.vercel.app/",
             },
             images: {
-              thumbnails: {
-                phone: "/images/portfolio-thumbnail.png",
-                tablet: "/images/portfolio-thumbnail.png",
-                desktop: "/images/portfolio-thumbnail.png",
+              dark: {
+                thumbnails: {
+                  phone: "/images/thumbnails/portfolio-thumbnail-dark.png",
+                  tablet: "/images/thumbnails/portfolio-thumbnail.png",
+                  desktop: "/images/thumbnails/portfolio-thumbnail-dark.png",
+                },
+              },
+              light: {
+                thumbnails: {
+                  phone: "/images/thumbnails/portfolio-thumbnail.png",
+                  tablet: "/images/thumbnails/portfolio-thumbnail.png",
+                  desktop: "/images/thumbnails/portfolio-thumbnail-light.png",
+                },
               },
             },
             tools: [
               {
                 name: "Next.js",
                 description: "The React Framework",
-                url: "https://nextjs.org/",
+                Icon: NextJSIcon,
               },
               {
                 name: "Tailwind CSS",
                 description: "A utility-first CSS framework",
-                url: "https://tailwindcss.com/",
+                Icon: TailwindIcon,
               },
               {
                 name: "TypeScript",
                 description: "A typed superset of JavaScript",
-                url: "https://www.typescriptlang.org/",
+                Icon: TypeScriptIcon,
               },
             ],
             projectDate: new Date("2025-10-01"),
