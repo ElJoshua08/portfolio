@@ -220,32 +220,6 @@ export function UploadProjectForm() {
             }}
           />
 
-          <Controller
-            name="tools"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field
-                data-invalid={fieldState.invalid}
-                className="gap-1"
-              >
-                <FieldLabel htmlFor="tools">Tools </FieldLabel>
-                <Input
-                  {...field}
-                  id="tools"
-                  type="text"
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                  }}
-                  aria-invalid={fieldState.invalid}
-                  placeholder="Placeholder input"
-                />
-
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
         </FieldGroup>
 
         <FieldGroup className="flex flex-col space-y-6 p-12 h-fit rounded-sm border">
@@ -394,6 +368,34 @@ export function UploadProjectForm() {
                   <FieldError errors={[fieldState.error]} />
                 )}
               </div>
+            )}
+          />
+
+
+          <Controller
+            name="tools"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field
+                data-invalid={fieldState.invalid}
+                className="gap-1"
+              >
+                <FieldLabel htmlFor="tools">Tools </FieldLabel>
+                <Input
+                  {...field}
+                  id="tools"
+                  type="text"
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                  }}
+                  aria-invalid={fieldState.invalid}
+                  placeholder="Placeholder input"
+                />
+
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
             )}
           />
         </FieldGroup>
