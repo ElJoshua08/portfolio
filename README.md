@@ -32,7 +32,7 @@ When I’m not coding, I’m probably:
 
 ---
 
-## 🧠 Features
+## Features
 
 - **Interactive Terminal UI** — type commands, explore, and have fun
 - **Dynamic Theming** — light/dark mode with custom palettes
