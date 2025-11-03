@@ -14,11 +14,14 @@ export const useCommands = () => {
         <>
           <br />
           <TypewriterWords delay={40}>
-            {Object.entries(COMMANDS).map(([key, value]) => (
-              <div key={key}>
-                <span className="text-accent">{key}</span> - {value.description}
-              </div>
-            ))}
+            {Object.entries(COMMANDS)
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([key, value]) => (
+                <div key={key}>
+                  <span className="text-accent">{key}</span> -{" "}
+                  {value.description}
+                </div>
+              ))}
           </TypewriterWords>
           <br />
         </>
