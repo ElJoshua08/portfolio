@@ -1,22 +1,22 @@
 export type Project = {
   title: string;
   description: string;
-  url: string;
-  thumbnail: string;
-  github?: string;
+  links: {
+    github?: string;
+    website?: string;
+  };
+  images: {
+    thumbnails: {
+      phone: string;
+      tablet: string;
+      desktop: string;
+    };
+  };
   tools: Tool[];
-  technologies: Technology[];
-  date: string;
-  tags: string[];
+  projectDate: Date;
 };
 
 export type Tool = {
-  name: string;
-  description: string;
-  url: string;
-};
-
-export type Technology = {
   name: string;
   description: string;
   url: string;

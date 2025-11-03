@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { Fira_Code } from "next/font/google";
 import "./globals.css";
@@ -31,7 +32,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
         >
-          {children}
+          <TooltipProvider>{children}</TooltipProvider>
 
           <Toaster richColors />
         </ThemeProvider>
