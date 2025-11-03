@@ -38,12 +38,19 @@ import * as z from "zod";
 
 type Schema = z.infer<typeof formSchema>;
 
-export function UploadProjectForm() {
+export function UploadProjectForm({
+  onJsonGenerated
+}: {
+  onJsonGenerated: (json: string) => void;
+}) {
   const form = useForm<Schema>({
     resolver: zodResolver(formSchema),
   });
   const handleSubmit = form.handleSubmit(async (data: Schema) => {
+    // * TODO: Generate JSO
+
     console.log(data);
+    onJsonGenerated(JSON.stringify(data));
   });
 
   return (
@@ -219,7 +226,6 @@ export function UploadProjectForm() {
               );
             }}
           />
-
         </FieldGroup>
 
         <FieldGroup className="flex flex-col space-y-6 p-12 h-fit rounded-sm border">
@@ -371,7 +377,6 @@ export function UploadProjectForm() {
             )}
           />
 
-
           <Controller
             name="tools"
             control={form.control}
@@ -410,7 +415,7 @@ export function UploadProjectForm() {
           </Button>
         </Link>
         <Button>
-          {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+          {form.formState.isSubmitting ? "Submitting..." : "Generate JSON"}
         </Button>
       </div>
     </form>
