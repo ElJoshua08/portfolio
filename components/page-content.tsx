@@ -20,9 +20,11 @@ const LINKS = [
 
 export const PageContent = ({
   children,
+  showNavLinks = true,
   showDelay = 500,
 }: {
   children: ReactNode;
+  showNavLinks?: boolean;
   showDelay?: number;
 }) => {
   const [showContent, setShowContent] = useState(false);
@@ -43,19 +45,21 @@ export const PageContent = ({
             : "opacity-0 translate-y-4 backdrop-blur-none"
         }`}
       >
-        <ul className="absolute flex items-center justify-center top-8 left-1/2 -translate-x-1/2 right-0  w-full md:translate-x-[unset] md:left-[unset] md:w-fit md:right-12 gap-x-6 z-20">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className="text-muted-foreground hover:text-foreground group transition-all *:transition-all font-medium"
-              >
-                <span className="group-hover:text-accent">[</span> {link.name}{" "}
-                <span className="group-hover:text-accent">]</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {showNavLinks && (
+          <ul className="absolute flex items-center justify-center top-8 left-1/2 -translate-x-1/2 right-0  w-full md:translate-x-[unset] md:left-[unset] md:w-fit md:right-12 gap-x-6 z-20">
+            {LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-muted-foreground hover:text-foreground group transition-all *:transition-all font-medium"
+                >
+                  <span className="group-hover:text-accent">[</span> {link.name}{" "}
+                  <span className="group-hover:text-accent">]</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {children}
       </div>
