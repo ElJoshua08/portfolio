@@ -1,16 +1,21 @@
+"use client";
+
 import { UploadProjectForm } from "@/app/(app)/projects/upload/form";
 import { PageContent } from "@/components/page-content";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/ui/copy-button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Json } from "@/src/types/json";
 import { useState } from "react";
 
 export default function UploadProjectPage() {
-  const [json, setJson] = useState("");
+  const [json, setJson] = useState<Json>();
 
   return (
     <PageContent showNavLinks={false}>
@@ -22,11 +27,25 @@ export default function UploadProjectPage() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>JSON Generated Successfully</DialogTitle>
+            <DialogDescription className="sr-only">
+              This is the JSON that was generated.
+            </DialogDescription>
           </DialogHeader>
-          <pre className="text-sm">{json}</pre>
+          <pre className="text-sm font-mono whitespace-pre-wrap bg-muted p-4 rounded-sm relative">
+            {JSON.stringify(json, null, 2)}
+
+            <CopyButton
+              variant="outline"
+              content="Hello"
+              className="absolute top-4 right-4"
+            />
+          </pre>
           <Button
+            rounded="round-sm"
             onClick={() => {
-              const blob = new Blob([json], { type: "application/json" });
+              const blob = new Blob([JSON.stringify(json)], {
+                type: "application/json",
+              });
               const url = URL.createObjectURL(blob);
 
               const a = document.createElement("a");

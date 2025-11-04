@@ -8,7 +8,15 @@ export interface ActionResponse<T = unknown> {
   };
   inputs?: T;
 }
+
 export const formSchema = z.object({
+  slug: z
+    .string({ error: "This field is required" })
+    .transform((val) => val.toLowerCase())
+    .refine((val) => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(val), {
+      message: "Slug must be in kebab-case (e.g., my-project-name)",
+    }),
+
   title: z.string({ error: "This field is required" }),
   description: z.string({ error: "This field is required" }),
   githubUrl: z.url({ error: "Please enter a valid url" }).optional(),
