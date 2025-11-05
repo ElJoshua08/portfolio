@@ -3,19 +3,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { formatBytes, useFileUpload } from "@/hooks/use-file-upload";
-import { AlertCircleIcon, CloudUpload, File, XIcon } from "lucide-react";
+import { useFileUpload } from "@/hooks/use-file-upload";
+import { AlertCircleIcon, CloudUpload, File, TrashIcon } from "lucide-react";
 
 const getFileIcon = (file: { file: File | { type: string; name: string } }) => {
   const fileType = file.file.type;
   if (fileType.startsWith("image/")) {
     // return preview
     return (
-      <div className="aspect-square size-10 overflow-hidden rounded-md">
+      <div className="aspect-square size-24 overflow-hidden rounded-md">
         <img
           alt="image"
           src={URL.createObjectURL(file.file as Blob)}
-          className="object-fill"
+          className="object-cover size-full"
         />
       </div>
     );
@@ -134,50 +134,33 @@ export function FileUpload({
 
       {/* File list */}
       {files.length > 0 && (
-        <div className="space-y-2">
+        <div className="flex gap-2 flex-wrap">
           {files.map((file) => (
             <div
               key={file.id}
-              className="flex items-center justify-between gap-2 rounded-lg border p-2 pe-3"
+              className="flex items-center justify-center gap-2 rounded-lg border min-w-16 min-h-16 relative group overflow-hidden"
             >
-              <div className="flex items-center gap-1.5 overflow-hidden">
-                {getFileIcon(file)}
-                <div className="flex min-w-0 flex-col gap-0.5">
-                  <p className="truncate text-[11px] font-medium max-w-[200px]">
-                    {file.file.name}
-                  </p>
-                  <p className="text-muted-foreground text-xs">
-                    {formatBytes(file.file.size)}
-                  </p>
-                </div>
-              </div>
+              {getFileIcon(file)}
 
-              <Button
-                size="icon"
-                variant="ghost"
-                className="text-muted-foreground/80 hover:text-foreground -me-2 size-8 hover:bg-transparent"
+              <button
+                className="absolute inset-0 flex items-center justify-center group-hover:bg-black/75 group-hover:backdrop-blur-[3px] cursor-pointer transition-all *:transition-all"
                 onClick={() => removeFile(file.id)}
-                aria-label="Remove file"
               >
-                <XIcon
-                  className="size-4"
-                  aria-hidden="true"
-                />
-              </Button>
+                <TrashIcon className="size-0 group-hover:size-12 stroke-destructive  stroke-2" />
+              </button>
             </div>
           ))}
 
           {/* Remove all files button */}
           {files.length > 1 && (
-            <div className="flex justify-end">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={clearFiles}
-              >
-                Remove all files
-              </Button>
-            </div>
+            <Button
+              size="sm"
+              rounded="round-sm"
+              variant="outline"
+              onClick={clearFiles}
+            >
+              Remove all files
+            </Button>
           )}
         </div>
       )}

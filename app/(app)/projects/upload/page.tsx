@@ -11,11 +11,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Json } from "@/src/types/json";
+import { ProjectSchema } from "@/src/schemas/project/view";
 import { useState } from "react";
 
 export default function UploadProjectPage() {
-  const [json, setJson] = useState<Json>();
+  const [json, setJson] = useState<ProjectSchema>();
 
   return (
     <PageContent showNavLinks={false}>
@@ -23,7 +23,10 @@ export default function UploadProjectPage() {
         <UploadProjectForm onJsonGenerated={setJson} />
       </div>
 
-      <Dialog open={!!json}>
+      <Dialog
+        open={!!json}
+        onOpenChange={(open) => !open && setJson(undefined)}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>JSON Generated Successfully</DialogTitle>
@@ -31,18 +34,18 @@ export default function UploadProjectPage() {
               This is the JSON that was generated.
             </DialogDescription>
           </DialogHeader>
-          <pre className="text-sm font-mono whitespace-pre-wrap bg-muted p-4 rounded-sm relative">
+          <pre className="text-sm font-mono whitespace-pre-wrap bg-muted p-4 rounded-sm relative max-h-[70vh] overflow-auto">
             {JSON.stringify(json, null, 2)}
 
             <CopyButton
               variant="outline"
-              content="Hello"
+              content={JSON.stringify(json, null, 2)}
               className="absolute top-4 right-4"
             />
           </pre>
           <Button
             rounded="round-sm"
-            onClick={() => {
+            onClick={() => { 
               const blob = new Blob([JSON.stringify(json)], {
                 type: "application/json",
               });
