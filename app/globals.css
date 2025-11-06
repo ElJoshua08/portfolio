@@ -210,7 +210,7 @@
   .glitch:before {
     content: attr(data-glitch);
     animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-    color: #a435ff;
+    color: #00e571;
     z-index: 1;
   }
 
@@ -218,7 +218,7 @@
     content: attr(data-glitch);
     animation: glitch 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both
       infinite;
-    color: #00e571;
+    color: #90ffc8;
     z-index: 1;
   }
 
