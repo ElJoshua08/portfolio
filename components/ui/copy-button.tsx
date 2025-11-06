@@ -7,7 +7,7 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ButtonProps } from "@/src/components/animate-ui/primitives/buttons/button";
+
 import { useControlledState } from "@/src/hooks/use-controlled-state";
 
 const buttonVariants = cva(
@@ -42,7 +42,7 @@ const buttonVariants = cva(
   }
 );
 
-type CopyButtonProps = Omit<ButtonProps, "children"> &
+type CopyButtonProps = Omit<React.ComponentProps<"button">, "children"> &
   VariantProps<typeof buttonVariants> & {
     content: string;
     copied?: boolean;

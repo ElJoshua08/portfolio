@@ -45,7 +45,7 @@ export default function UploadProjectPage() {
           </pre>
           <Button
             rounded="round-sm"
-            onClick={() => { 
+            onClick={() => {
               const blob = new Blob([JSON.stringify(json)], {
                 type: "application/json",
               });
