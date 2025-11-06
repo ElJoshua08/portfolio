@@ -26,7 +26,7 @@ export const ThanksEmail = ({ name }: ThanksEmailProps) => (
     >
       <Container
         style={{
-          backgroundColor: "#06cca3",
+          backgroundColor: "#66ffcc",
           borderRadius: "8px",
           padding: "32px",
           maxWidth: "600px",
@@ -35,7 +35,7 @@ export const ThanksEmail = ({ name }: ThanksEmailProps) => (
       >
         <Heading
           style={{
-            color: "#895af9",
+            color: "#130630",
             fontSize: "22px",
             marginBottom: "16px",
           }}
@@ -68,7 +68,7 @@ export const ThanksEmail = ({ name }: ThanksEmailProps) => (
         <Section style={{ marginTop: "24px", textAlign: "center" }}>
           <Button
             style={{
-              backgroundColor: "#01ba7c",
+              backgroundColor: "#7033ff",
               color: "#ffffff",
               textDecoration: "none",
               borderRadius: "4px",
