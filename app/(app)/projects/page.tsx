@@ -16,7 +16,7 @@ export default function ProjectsPage() {
         <h1 className="font-bold text-4xl text-center">Some of my projects</h1>
       </header>
 
-      <section className="w-full h-full flex items-center justify-start py-20 px-30 flex-col gap-y-20">
+      <section className="w-full h-full flex items-center justify-start flex-col">
         <Project
           project={{
             title: "Portfolio",
@@ -63,7 +63,7 @@ export default function ProjectsPage() {
           }}
         />
 
-        <div className="flex w-full items-center justify-center gap-x-40">
+        <div className="flex w-full items-center justify-center gap-x-40 h-44">
           <button
             className="text-xl cursor-pointer disabled:text-muted-foreground"
             disabled

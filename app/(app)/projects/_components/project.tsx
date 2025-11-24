@@ -22,43 +22,45 @@ export const Project = ({ project }: { project: ProjectType }) => {
   const { resolvedTheme } = useTheme();
 
   return (
-    <div className="flex flex-row items-start justify-center gap-x-12 w-full h-96">
-      <Dialog>
-        <DialogTrigger className="cursor-pointer group relative h-full w-full">
-          <div className="relative h-full aspect-19/10">
-            <Image
-              src={
-                project.images[resolvedTheme as "dark" | "light"].thumbnails
-                  .desktop
-              }
-              alt={project.title}
-              fill
-              className="rounded-md w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 backdrop-blur-xl bg-muted/25 rounded-[calc(var(--radius)-3px)] transition-all flex items-center justify-center border-2 border-emerald-500">
-              <ExpandIcon className="size-24 stroke-1" />
+    <div className="flex flex-row items-start justify-center gap-x-12 w-full h-full">
+      <div className="w-44 h-full relative">
+        <Dialog>
+          <DialogTrigger className="cursor-pointer group h-full w-full -translate-x-[700px]">
+            <div className="relative h-full aspect-19/10 ">
+              <Image
+                src={
+                  project.images[resolvedTheme as "dark" | "light"].thumbnails
+                    .desktop
+                }
+                alt={project.title}
+                fill
+                className="rounded-md w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 backdrop-blur-xl bg-muted/25 rounded-[calc(var(--radius)-3px)] transition-all flex items-center justify-center border-2 border-emerald-500">
+                <ExpandIcon className="size-24 stroke-1" />
+              </div>
             </div>
-          </div>
-        </DialogTrigger>
-        <DialogContent className="max-w-[90vw]! aspect-19/10 p-0!">
-          <DialogTitle className="hidden" />
-          <DialogDescription className="hidden" />
-          <div className="h-full w-full relative">
-            <Image
-              src={
-                project.images[resolvedTheme as "dark" | "light"].thumbnails
-                  .desktop
-              }
-              alt={project.title}
-              fill
-              className="rounded-md w-full h-full object-cover"
-            />
-          </div>
-        </DialogContent>
-      </Dialog>
+          </DialogTrigger>
+          <DialogContent className="max-w-[90vw]! aspect-19/10 p-0!">
+            <DialogTitle className="hidden" />
+            <DialogDescription className="hidden" />
+            <div className="h-full w-full relative">
+              <Image
+                src={
+                  project.images[resolvedTheme as "dark" | "light"].thumbnails
+                    .desktop
+                }
+                alt={project.title}
+                fill
+                className="rounded-md w-full h-full object-cover"
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+        </div>
 
       <div className="flex flex-col items-start justify-between gap-y-12 w-full min-h-full ">
-        <header className="flex flex-col gap-y-1">
+        <header className="flex flex-col gap-y-4">
           <h2 className="font-bold text-4xl tracking-wide">{project.title}</h2>
           <p className="text-lg text-muted-foreground whitespace-pre-line">
             {project.description}
