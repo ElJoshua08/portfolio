@@ -39,7 +39,7 @@ export const PageContent = ({
   return (
     <main className="h-dvh w-full p-4">
       <div
-        className={`h-full w-full flex flex-col shadow-xl rounded-sm overflow-hidden bg-card transition-all duration-700 p-6 relative ${
+        className={`h-full w-full flex flex-col page-shadow rounded-sm overflow-hidden bg-card transition-all duration-700 p-6 relative ${
           showContent
             ? "opacity-100 translate-y-0 backdrop-blur-3xl"
             : "opacity-0 translate-y-4 backdrop-blur-none"
