@@ -57,7 +57,7 @@ export const Project = ({ project }: { project: ProjectType }) => {
             </div>
           </DialogContent>
         </Dialog>
-        </div>
+      </div>
 
       <div className="flex flex-col items-start justify-between gap-y-12 w-full min-h-full ">
         <header className="flex flex-col gap-y-4">

@@ -1,7 +1,7 @@
 "use client";
 
 import { Loader } from "@/app/_components/loader";
-import { ASCII_BANNER } from "@/src/contants";
+import { ASCII_BANNER } from "@/src/constants";
 import { useEffect, useState } from "react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {

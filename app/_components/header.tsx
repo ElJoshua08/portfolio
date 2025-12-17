@@ -1,4 +1,4 @@
-import { ASCII_BANNER } from "@/src/contants";
+import { ASCII_BANNER } from "@/src/constants";
 import Link from "next/link";
 
 export const Header = () => {

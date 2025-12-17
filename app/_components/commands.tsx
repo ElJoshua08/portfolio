@@ -1,7 +1,7 @@
 "use client";
 
 import { TypewriterText, TypewriterWords } from "@/components/typewriter";
-import { ASCII_ART } from "@/src/contants";
+import { ASCII_ART } from "@/src/constants";
 import { useTheme } from "next-themes";
 
 export const useCommands = () => {
