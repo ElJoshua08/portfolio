@@ -1,17 +1,15 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-mono'});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bodyFont = JetBrains_Mono({
   subsets: ["latin"],
+  variable: "--font-body",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const headerFont = Space_Grotesk({
+  variable: "--font-header",
   subsets: ["latin"],
 });
 
@@ -28,7 +26,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        headerFont.variable,
+        bodyFont.variable,
+        "font-mono"
+      )}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
