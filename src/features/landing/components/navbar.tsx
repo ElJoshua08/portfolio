@@ -10,12 +10,12 @@ const LINKS = [
     href: "/",
   },
   {
-    name: "About",
-    href: "/about",
-  },
-  {
     name: "Projects",
     href: "/projects",
+  },
+  {
+    name: "Contact",
+    href: "/contact",
   },
 ];
 
@@ -23,9 +23,16 @@ export const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="border-border flex h-20 min-h-16 w-full items-center justify-between border-b px-8">
+    <nav className="border-border relative flex h-20 min-h-16 w-full items-center justify-between px-8">
+      {/* Bottom border */}
+      <div
+        id="bottom-border"
+        className="bg-border absolute bottom-0 left-0 h-px w-full"
+      />
+
       <Link
         href="/"
+        id="logo"
         className="text-accent-green font-header font-bold tracking-widest uppercase"
       >
         Josue Diaz Martinez
@@ -36,7 +43,7 @@ export const Navbar = () => {
           const isActive = pathname === link.href;
 
           return (
-            <li key={link.name}>
+            <li key={link.name} className="link-item">
               <Link
                 href={link.href}
                 className={cn(

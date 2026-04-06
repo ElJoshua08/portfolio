@@ -2,17 +2,18 @@
 
 "use client";
 
-import { LINES } from "@/features/constants";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ABOUT_ME_LINES } from "@/features/landing/constants";
 
 export const TextEditor = () => {
   return (
-    <div className="flex h-full w-full flex-col items-start justify-start gap-y-3">
+    <div className="flex min-h-0 w-full flex-col items-start justify-start gap-y-3 overflow-y-hidden bg-red-500">
       <span className="text-muted-foreground top-comment">
         // A little bit of <span className="text-accent-green">myself</span>
       </span>
-      <div className="container-card bg-card flex h-full w-4/5 flex-col items-start justify-start gap-y-1 rounded-md py-4">
+      <ScrollArea className="container-card bg-card flex w-4/5 grow flex-col items-start justify-start gap-y-1 overflow-y-auto rounded-xs py-4">
         <span className="text-muted-foreground mb-2 pl-4">about-me.txt</span>
-        {LINES.map((line, idx) => (
+        {ABOUT_ME_LINES.map((line, idx) => (
           <div
             key={idx}
             className="hover:bg-muted flex w-full items-start justify-start gap-x-4 px-4"
@@ -34,8 +35,8 @@ export const TextEditor = () => {
             )}
           </div>
         ))}
-      </div>
-      <span className="text-muted-foreground bottom-comment">
+      </ScrollArea>
+      {/* <span className="text-muted-foreground bottom-comment">
         {"// This might have taken me a while :8"
           .split(" ")
           .map((word, idx) => (
@@ -43,7 +44,7 @@ export const TextEditor = () => {
               {word}{" "}
             </span>
           ))}
-      </span>
+      </span> */}
     </div>
   );
 };

@@ -1,7 +1,15 @@
+"use client";
+
+import { Line } from "@/features/landing/types";
+import { useState } from "react";
+
+// TODO: we should really use a provider an abstract this component, (UI goes inside page itself, and then we can reuse it)
+
 export const Terminal = () => {
   return (
-    <div className="h-full w-1/2 shrink-0 grow">
+    <div className="flex h-full min-h-0 w-1/2 shrink-0 grow flex-col">
       <TerminalHeader />
+      <TerminalBody />
     </div>
   );
 };
@@ -23,5 +31,9 @@ export const TerminalHeader = () => {
 };
 
 export const TerminalBody = () => {
-  return <div></div>;
+  const [lines, setLines] = useState<Line[]>([]);
+
+  return (
+    <div className="flex grow w-full items-start justify-start gap-y-1 overflow-y-auto bg-red-500 p-2"></div>
+  );
 };
