@@ -1,25 +1,68 @@
 "use client";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { TERMINAL_INITIALIZATION_LINES } from "@/features/landing/constants";
-import { TerminalLine } from "@/features/landing/types";
+import { TerminalLine, TerminalType } from "@/features/landing/types";
 import { generatePrompt } from "@/features/landing/utils";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 
-// TODO: we should really use a provider an abstract this component, (UI goes inside page itself, and then we can reuse it)
+type TerminalContextType = {
+  terminal: TerminalType;
+  inputRef: React.RefObject<HTMLInputElement | null>;
+  addLine: (line: TerminalLine) => void;
+  reset: () => void;
+  focusInput: () => void;
+};
+
+const terminalContext = createContext<TerminalContextType>({
+  terminal: { lines: undefined },
+  inputRef: { current: null },
+  addLine: () => {},
+  reset: () => {},
+  focusInput: () => {},
+});
+
+export const useTerminal = () => useContext(terminalContext);
+
+// TODO: All this must be animated.
 
 export const Terminal = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [terminal, setTerminal] = useState<TerminalType>({
+    lines: TERMINAL_INITIALIZATION_LINES,
+  });
+
+  const addLine = (line: TerminalLine) => {
+    setTerminal((prev) => ({
+      ...prev,
+      lines: [...(prev.lines ?? []), line],
+    }));
+  };
+
+  const reset = () => {
+    setTerminal({ lines: undefined });
+  };
+
+  const focusInput = () => inputRef.current?.focus();
+
   return (
-    <div className="flex h-full min-h-0 w-1/2 shrink-0 grow flex-col">
-      <TerminalHeader />
-      <TerminalBody />
-    </div>
+    <terminalContext.Provider
+      value={{ terminal, addLine, reset, inputRef, focusInput }}
+    >
+      <div className="flex h-full min-h-0 w-1/2 shrink-0 grow flex-col">
+        <TerminalHeader />
+        <TerminalBody />
+      </div>
+    </terminalContext.Provider>
   );
 };
 
 export const TerminalHeader = () => {
+  const { reset } = useTerminal();
+
   return (
-    <div className="bg-surface flex w-full items-center justify-between border-b p-6">
+    <div className="bg-surface flex w-full items-center justify-between border-b p-4">
       <span className="text-accent-green text-lg uppercase">
         Super crazy terminal
       </span>
@@ -27,80 +70,104 @@ export const TerminalHeader = () => {
       <div className="flex items-center gap-x-2">
         <span className="size-3 cursor-pointer rounded-full bg-[#219A33]" />
         <span className="size-3 cursor-pointer rounded-full bg-[#FEBC2E]" />
-        <span className="size-3 cursor-pointer rounded-full bg-[#D32B22]" />
+        <span
+          onClick={reset}
+          className="size-3 cursor-pointer rounded-full bg-[#D32B22]"
+        />
       </div>
     </div>
   );
 };
 
 export const TerminalBody = () => {
-  const [lines, setLines] = useState<TerminalLine[]>(
-    TERMINAL_INITIALIZATION_LINES,
-  );
-
+  const { terminal, focusInput } = useTerminal();
   return (
-    <div className="flex w-full grow flex-col items-start justify-start gap-y-1 overflow-y-auto p-4">
-      {lines.map((line, idx) => {
-        const prompt = Array.isArray(line.prompt)
-          ? line.prompt
-          : line.prompt && [line.prompt];
-        const body = Array.isArray(line.body)
-          ? line.body
-          : line.body && [line.body];
-        const misc = Array.isArray(line.misc)
-          ? line.misc
-          : line.misc && [line.misc];
+    <ScrollArea
+      className="flex h-full min-h-0 w-full flex-col items-start justify-start gap-y-1 overflow-y-auto p-4"
+      onClick={focusInput}
+    >
+      {terminal.lines &&
+        terminal.lines.map((line, idx) => {
+          const prompt = Array.isArray(line.prompt)
+            ? line.prompt
+            : line.prompt && [line.prompt];
+          const body = Array.isArray(line.body)
+            ? line.body
+            : line.body && [line.body];
+          const misc = Array.isArray(line.misc)
+            ? line.misc
+            : line.misc && [line.misc];
 
-        return (
-          <div
-            key={idx}
-            className="flex w-full items-center justify-start gap-x-2"
-          >
-            <span className="grow">
-              {prompt &&
-                prompt.map((section, sectionIdx) => (
-                  <span
-                    key={sectionIdx}
-                    className={cn(section.className, "mr-[1ch]")}
-                  >
+          return (
+            <div
+              key={idx}
+              className="flex w-full items-center justify-start gap-x-2"
+            >
+              <span className="grow">
+                {prompt &&
+                  prompt.map((section, sectionIdx) => (
+                    <span key={sectionIdx} className={cn(section.className)}>
+                      {section.content}
+                    </span>
+                  ))}
+                {body &&
+                  body.map((section, sectionIdx) => (
+                    <span key={sectionIdx} className={cn(section.className)}>
+                      {section.content}
+                    </span>
+                  ))}
+              </span>
+              {misc &&
+                misc.map((section, sectionIdx) => (
+                  <span key={sectionIdx} className={cn(section.className)}>
                     {section.content}
                   </span>
                 ))}
-              {body &&
-                body.map((section, sectionIdx) => (
-                  <span
-                    key={sectionIdx}
-                    className={cn(section.className, "mr-[1ch]")}
-                  >
-                    {section.content}
-                  </span>
-                ))}
-            </span>
-            {misc &&
-              misc.map((section, sectionIdx) => (
-                <span key={sectionIdx} className={cn(section.className)}>
-                  {section.content}
-                </span>
-              ))}
-          </div>
-        );
-      })}
+            </div>
+          );
+        })}
 
       <TerminalPrompt />
-    </div>
+    </ScrollArea>
   );
 };
 
 const TerminalPrompt = () => {
+  const { inputRef, addLine } = useTerminal();
   const prompt = generatePrompt({});
 
+  function registerCommand(command: string) {
+    const newLine: TerminalLine = {
+      prompt,
+      body: {
+        content: command,
+        className: "text-foreground",
+      },
+    };
+
+    addLine(newLine);
+    inputRef.current!.value = "";
+  }
+
+  // TODO: now we actually need a command system. (now idea how to implement it now.)
+
   return (
-    <span>
-      {prompt.map((section, sectionIdx) => (
-        <span key={sectionIdx} className={cn(section.className)}>
-          {section.content}
-        </span>
-      ))}
+    <span className="flex w-full items-center">
+      <span className="inline">
+        {prompt.map((section, sectionIdx) => (
+          <span key={sectionIdx} className={cn(section.className)}>
+            {section.content}
+          </span>
+        ))}
+      </span>
+
+      <input
+        ref={inputRef}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") registerCommand(e.currentTarget.value);
+        }}
+        className="ml-[1ch] flex-1 outline-0"
+      />
     </span>
   );
 };

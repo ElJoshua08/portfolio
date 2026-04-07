@@ -2,6 +2,7 @@
 
 import { Hero } from "@/features/landing/components/hero";
 import { Navbar } from "@/features/landing/components/navbar";
+import { ProjectsShowcase } from "@/features/landing/components/projects-showcase";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
@@ -15,6 +16,7 @@ export default function Home() {
 
   useGSAP(
     () => {
+      // TODO: Adjust timings and easings to make a good animation.
       const enter = gsap.timeline({ defaults: { ease: "power3.inOut" } });
 
       const logoChars = new SplitText("#logo", {
@@ -33,9 +35,9 @@ export default function Home() {
         {
           yPercent: 0,
           opacity: 1,
-          duration: 0.32,
-          delay: 0.32,
-          stagger: 0.35,
+          duration: 0.22,
+          delay: 0.22,
+          stagger: 0.1,
           ease: "expo.out",
         },
       );
@@ -49,10 +51,11 @@ export default function Home() {
         {
           yPercent: 0,
           opacity: 1,
-          stagger: 0.35,
+          duration: 0.3,
+          stagger: 0.1,
           ease: "expo.out",
         },
-        "<1",
+        "<0.3",
       );
 
       enter.fromTo(
@@ -62,7 +65,7 @@ export default function Home() {
         },
         {
           width: "100%",
-          duration: 1,
+          duration: 0.6,
           ease: "slow(0.1,0.4,false)",
         },
       );
@@ -175,57 +178,67 @@ export default function Home() {
     { scope: containerRef },
   );
 
-  // useGSAP(
-  //   () => {
-  //     const exit = gsap.timeline({
-  //       defaults: { ease: "none" },
-  //       scrollTrigger: {
-  //         trigger: containerRef.current!,
-  //         start: "top top",
-  //         end: "+=450vh",
-  //         scrub: 1,
-  //         pin: true,
-  //         anticipatePin: 1,
-  //         invalidateOnRefresh: true,
-  //       },
-  //     });
+  useGSAP(
+    () => {
+      const exit = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: containerRef.current!,
+          start: "top top",
+          end: "+=450vh",
+          scrub: 1,
+          pin: true,
+          invalidateOnRefresh: true,
+        },
+      });
 
-  //     exit
-  //       .to(
-  //         "#hero-name div div",
-  //         { y: -60, backdropFilter: "blur(0px)", duration: 0.4 },
-  //         "<",
-  //       )
-  //       .to("#hero-complete-name", { y: -60, autoAlpha: 0, duration: 1 }, "<1")
-  //       .to(".top-comment", { y: -20, autoAlpha: 0, duration: 0.6 }, "<0.3")
-  //       .to(
-  //         ".editor-number",
-  //         { y: -20, autoAlpha: 0, duration: 0.6, stagger: 0.03 },
-  //         "<0.2",
-  //       )
-  //       .to(
-  //         ".editor-line",
-  //         { y: -20, autoAlpha: 0, duration: 0.6, stagger: 0.03 },
-  //         "<",
-  //       )
-  //       .to(
-  //         ".container-card",
-  //         { y: -40, autoAlpha: 0, filter: "blur(12px)", duration: 1 },
-  //         "<0.2",
-  //       )
-  //       .to(".bottom-comment", { y: -20, autoAlpha: 0, duration: 0.5 }, "<0.3")
-  //       .to("#hero-scroll", { autoAlpha: 0, duration: 0.5 }, "<");
-  //   },
-  //   { scope: containerRef },
-  // );
+      exit
+        .to(
+          "#hero-name .text-blur",
+          { y: -60, backdropFilter: "blur(0px)", duration: 0.4, stagger: 0.03 },
+          "<",
+        )
+        .to("#hero-name-wrapper", {
+          opacity: 1,
+          backdropFilter: "blur(16px)",
+        })
+        .to(
+          "#hero-complete-name",
+          { y: -60, autoAlpha: 0, duration: 1 },
+          "<0.4",
+        )
+        .to(".top-comment", { y: -20, autoAlpha: 0, duration: 0.6 }, "<0.3")
+        .to(
+          ".editor-number",
+          { y: -20, autoAlpha: 0, duration: 0.6, stagger: 0.03 },
+          "<0.2",
+        )
+        .to(
+          ".editor-line",
+          { y: -20, autoAlpha: 0, duration: 0.6, stagger: 0.03 },
+          "<",
+        )
+        .to(
+          ".container-card",
+          { y: -40, autoAlpha: 0, filter: "blur(12px)", duration: 1 },
+          "<0.2",
+        )
+        .to(".bottom-comment", { y: -20, autoAlpha: 0, duration: 0.5 }, "<0.3")
+        .to("#hero-scroll", { autoAlpha: 0, duration: 0.5 }, "<");
+    },
+    { scope: containerRef },
+  );
 
   return (
-    <div
-      ref={containerRef}
-      className="flex h-screen w-full flex-col items-start justify-start"
-    >
-      <Navbar />
-      <Hero />
+    <div className="relative w-full">
+      <div
+        ref={containerRef}
+        className="flex h-screen w-full flex-col items-start justify-start"
+      >
+        <Navbar />
+        <Hero />
+      </div>
+      <ProjectsShowcase />
     </div>
   );
 }

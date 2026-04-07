@@ -10,3 +10,7 @@ export type TerminalLine = {
   body?: TerminalSection[] | TerminalSection;
   misc?: TerminalSection[] | TerminalSection;
 };
+
+export type TerminalType = {
+  lines?: TerminalLine[];
+};

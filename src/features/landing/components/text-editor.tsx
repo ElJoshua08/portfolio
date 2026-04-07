@@ -3,7 +3,8 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ABOUT_ME_LINES } from "@/features/landing/constants";
+import { ABOUT_ME } from "@/features/landing/constants";
+import { cn } from "@/lib/utils";
 
 export const TextEditor = () => {
   return (
@@ -11,11 +12,11 @@ export const TextEditor = () => {
       <span className="text-muted-foreground top-comment">
         // A little bit of <span className="text-accent-green">myself</span>
       </span>
-      <ScrollArea className="container-card bg-card flex min-h-0 w-4/5 max-w-2xl grow flex-col items-start justify-start gap-y-1 overflow-y-auto rounded-xs py-4">
+      <ScrollArea className="container-card bg-card flex min-h-0 w-4/5 max-w-2xl grow flex-col items-start justify-start gap-y-2 overflow-y-auto rounded-xs py-4">
         <span className="text-muted-foreground mb-3 inline-block pl-4">
           about-me.txt
         </span>
-        {ABOUT_ME_LINES.map((line, idx) => (
+        {ABOUT_ME.map((line, idx) => (
           <div
             key={idx}
             className="hover:bg-muted flex w-full items-start justify-start gap-x-4 px-4"
@@ -23,18 +24,19 @@ export const TextEditor = () => {
             <span className="editor-number text-card-foreground/60 w-[2ch] text-right select-none">
               {idx + 1}
             </span>
-            {line.type === "text" && (
-              <span className="text-nowrap">
-                {line.texts!.map((text, idx) => (
-                  <span
-                    key={idx}
-                    className={`text-${text.color} editor-line mr-2 inline-block`}
-                  >
-                    {text.text}{" "}
-                  </span>
-                ))}
-              </span>
-            )}
+            <span className="text-nowrap">
+              {line.map((section, sectionIdx) => (
+                <span
+                  key={sectionIdx}
+                  className={cn(
+                    section.className,
+                    "editor-line mr-[1ch] inline-block",
+                  )}
+                >
+                  {section.content}{" "}
+                </span>
+              ))}
+            </span>
           </div>
         ))}
       </ScrollArea>

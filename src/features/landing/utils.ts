@@ -21,7 +21,7 @@ export function generatePrompt({
       className: "text-muted-foreground",
     },
     {
-      content: promptChar,
+      content: `${promptChar} `,
       className: "text-accent-green",
     },
   ];
