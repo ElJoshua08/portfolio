@@ -2,6 +2,7 @@
 
 import { TERMINAL_INITIALIZATION_LINES } from "@/features/landing/constants";
 import { TerminalLine } from "@/features/landing/types";
+import { generatePrompt } from "@/features/landing/utils";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -84,6 +85,22 @@ export const TerminalBody = () => {
           </div>
         );
       })}
+
+      <TerminalPrompt />
     </div>
+  );
+};
+
+const TerminalPrompt = () => {
+  const prompt = generatePrompt({});
+
+  return (
+    <span>
+      {prompt.map((section, sectionIdx) => (
+        <span key={sectionIdx} className={cn(section.className)}>
+          {section.content}
+        </span>
+      ))}
+    </span>
   );
 };
