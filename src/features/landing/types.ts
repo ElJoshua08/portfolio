@@ -1,9 +1,12 @@
-export type Prompt = string; // TODO: this shouldnt be string, but for now works.
-export type Misc = string; // TODO: this also shouldnt be.
-export type Body = { content: string; color: string }[];
+import type { ClassValue } from "clsx";
 
-export type Line = {
-  prompt: Prompt | null;
-  body: Body;
-  misc: Misc | null;
+export type TerminalSection = {
+  content: string;
+  className: ClassValue;
+};
+
+export type TerminalLine = {
+  prompt?: TerminalSection[];
+  body?: TerminalSection[] | TerminalSection;
+  misc?: TerminalSection[] | TerminalSection;
 };

@@ -11,10 +11,10 @@ const BLUR_STEPS = 16;
 
 export const Hero = () => {
   return (
-    <main className="flex w-full grow flex-row items-center justify-center">
+    <main className="flex h-full min-h-0 w-full flex-row items-center justify-center">
       <div
         id="hero-left"
-        className="relative flex min-h-0 w-1/2 flex-col gap-y-12 overflow-hidden p-12"
+        className="relative flex h-full min-h-0 w-1/2 flex-col gap-y-12 overflow-hidden p-12"
       >
         <h1
           id="hero-complete-name"

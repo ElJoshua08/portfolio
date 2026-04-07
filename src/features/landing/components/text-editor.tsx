@@ -7,12 +7,14 @@ import { ABOUT_ME_LINES } from "@/features/landing/constants";
 
 export const TextEditor = () => {
   return (
-    <div className="flex min-h-0 w-full flex-col items-start justify-start gap-y-3 overflow-y-hidden bg-red-500">
+    <div className="flex h-full min-h-0 w-full flex-col items-start justify-start gap-y-3 overflow-y-hidden">
       <span className="text-muted-foreground top-comment">
         // A little bit of <span className="text-accent-green">myself</span>
       </span>
-      <ScrollArea className="container-card bg-card flex w-4/5 grow flex-col items-start justify-start gap-y-1 overflow-y-auto rounded-xs py-4">
-        <span className="text-muted-foreground mb-2 pl-4">about-me.txt</span>
+      <ScrollArea className="container-card bg-card flex min-h-0 w-4/5 max-w-2xl grow flex-col items-start justify-start gap-y-1 overflow-y-auto rounded-xs py-4">
+        <span className="text-muted-foreground mb-3 inline-block pl-4">
+          about-me.txt
+        </span>
         {ABOUT_ME_LINES.map((line, idx) => (
           <div
             key={idx}
@@ -22,7 +24,7 @@ export const TextEditor = () => {
               {idx + 1}
             </span>
             {line.type === "text" && (
-              <span>
+              <span className="text-nowrap">
                 {line.texts!.map((text, idx) => (
                   <span
                     key={idx}
@@ -36,7 +38,7 @@ export const TextEditor = () => {
           </div>
         ))}
       </ScrollArea>
-      {/* <span className="text-muted-foreground bottom-comment">
+      <span className="text-muted-foreground bottom-comment">
         {"// This might have taken me a while :8"
           .split(" ")
           .map((word, idx) => (
@@ -44,7 +46,7 @@ export const TextEditor = () => {
               {word}{" "}
             </span>
           ))}
-      </span> */}
+      </span>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 "use client";
 
-import { Line } from "@/features/landing/types";
+import { TERMINAL_INITIALIZATION_LINES } from "@/features/landing/constants";
+import { TerminalLine } from "@/features/landing/types";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 // TODO: we should really use a provider an abstract this component, (UI goes inside page itself, and then we can reuse it)
@@ -31,9 +33,57 @@ export const TerminalHeader = () => {
 };
 
 export const TerminalBody = () => {
-  const [lines, setLines] = useState<Line[]>([]);
+  const [lines, setLines] = useState<TerminalLine[]>(
+    TERMINAL_INITIALIZATION_LINES,
+  );
 
   return (
-    <div className="flex grow w-full items-start justify-start gap-y-1 overflow-y-auto bg-red-500 p-2"></div>
+    <div className="flex w-full grow flex-col items-start justify-start gap-y-1 overflow-y-auto p-4">
+      {lines.map((line, idx) => {
+        const prompt = Array.isArray(line.prompt)
+          ? line.prompt
+          : line.prompt && [line.prompt];
+        const body = Array.isArray(line.body)
+          ? line.body
+          : line.body && [line.body];
+        const misc = Array.isArray(line.misc)
+          ? line.misc
+          : line.misc && [line.misc];
+
+        return (
+          <div
+            key={idx}
+            className="flex w-full items-center justify-start gap-x-2"
+          >
+            <span className="grow">
+              {prompt &&
+                prompt.map((section, sectionIdx) => (
+                  <span
+                    key={sectionIdx}
+                    className={cn(section.className, "mr-[1ch]")}
+                  >
+                    {section.content}
+                  </span>
+                ))}
+              {body &&
+                body.map((section, sectionIdx) => (
+                  <span
+                    key={sectionIdx}
+                    className={cn(section.className, "mr-[1ch]")}
+                  >
+                    {section.content}
+                  </span>
+                ))}
+            </span>
+            {misc &&
+              misc.map((section, sectionIdx) => (
+                <span key={sectionIdx} className={cn(section.className)}>
+                  {section.content}
+                </span>
+              ))}
+          </div>
+        );
+      })}
+    </div>
   );
 };
