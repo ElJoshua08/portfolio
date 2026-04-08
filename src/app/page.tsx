@@ -14,8 +14,9 @@ gsap.registerPlugin(SplitText, SlowMo);
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // TODO: animations starts just a little bit after page is loaded, so all the widths etc should be already setted
+  // TODO: that way although the page loads before the animation starts nothing is visible, then we just need to change fromTo() -> to()
   useGSAP(() => {
-    // TODO: Adjust timings and easings to make a good animation.
     const enter = gsap.timeline({ defaults: { ease: "power3.inOut" } });
 
     enter.fromTo(

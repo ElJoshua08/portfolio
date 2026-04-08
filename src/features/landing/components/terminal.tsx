@@ -1,6 +1,7 @@
 "use client";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { COMMANDS } from "@/features/landing/commands";
 import { TERMINAL_INITIALIZATION_LINES } from "@/features/landing/constants";
 import { TerminalLine, TerminalType } from "@/features/landing/types";
 import { generatePrompt } from "@/features/landing/utils";
@@ -163,19 +164,30 @@ export const TerminalBody = () => {
 };
 
 const TerminalPrompt = () => {
-  const { inputRef, addLine } = useTerminal();
+  const { inputRef, addLine, reset } = useTerminal();
   const prompt = generatePrompt({});
 
-  function registerCommand(command: string) {
+  function registerCommand(input: string) {
+    const [name, ...args] = input.trim().split(" ");
+
     const newLine: TerminalLine = {
       prompt,
-      body: {
-        content: command,
-        className: "terminal-line text-foreground",
-      },
+      body: { content: input, className: "terminal-line text-foreground" },
     };
-
     addLine(newLine);
+
+    const command = COMMANDS[name];
+    if (command) {
+      command.handler({ addLine, reset, args });
+    } else if (name) {
+      addLine({
+        body: {
+          content: `command not found: ${name} · type 'help' to see available commands`,
+          className: "text-destructive",
+        },
+      });
+    }
+
     inputRef.current!.value = "";
   }
 
