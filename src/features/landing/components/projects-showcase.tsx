@@ -1,31 +1,43 @@
 "use client";
 
 import { TextBlur } from "@/components/ui/text-blur";
+import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { XIcon } from "lucide-react";
-import Image from "next/image";
 import { useRef, useState } from "react";
+
+const ROWS = 10;
 
 export const ProjectsShowcase = () => {
   const containerRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
 
-  // Setup inicial solo una vez
-  useGSAP(
-    () => {
-      gsap.set(".project-image", { autoAlpha: 0 });
-    },
-    { scope: containerRef },
-  );
+  console.log("hovering");
 
   // Reacciona a isHovering
   useGSAP(
     () => {
-      gsap.to(".project-image", {
-        autoAlpha: isHovering ? 1 : 0,
-        duration: 0.4,
-      });
+      if (isHovering) {
+        gsap.to(".project-row-inner-first", {
+          x: "0%",
+          ease: "expo.inOut",
+          delay: 0.125,
+          duration: 1.2,
+        });
+        gsap.to(".project-row-inner", {
+          x: "0%",
+          ease: "expo.out",
+          duration: 0.7,
+          delay: 0.8,
+          stagger: 0.08,
+        });
+      } else {
+        gsap.to(".project-row-inner, .project-row-inner-first", {
+          x: "-100%",
+          duration: 0.4,
+        });
+      }
     },
     { scope: containerRef, dependencies: [isHovering] },
   );
@@ -74,16 +86,45 @@ export const ProjectsShowcase = () => {
         </h3>
       </footer>
 
-      <Image
-        src="/waves.jpg"
-        fill
-        className="project-image absolute z-20 object-cover"
-        alt="Stackd"
-      />
+      <div className="project-reveal pointer-events-none absolute inset-0 z-20">
+        {Array.from({ length: ROWS }).map((_, i) => (
+          <div
+            key={i}
+            className={cn(
+              "absolute w-full overflow-hidden",
+              i === 0 ? "project-row-inner-first" : "project-row-inner",
+            )}
+            style={{
+              height: `${100 / ROWS}%`,
+              top: `${(100 / ROWS) * i}%`,
+            }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: "url('/mountain-lg.jpg')",
+                backgroundSize: `100% ${ROWS * 100}%`,
+                backgroundPosition: `0% ${(i * 100) / (ROWS - 1)}%`,
+                backgroundRepeat: "no-repeat",
+              }}
+            />
+          </div>
+        ))}
+      </div>
 
       {isHovering && (
-        <button className="bg-background absolute top-6 right-6 z-20 flex size-8 cursor-pointer items-center justify-center rounded-full">
-          <XIcon onClick={() => setIsHovering(false)} />
+        <button
+          className="bg-background absolute top-0 right-0 z-20 flex cursor-pointer items-center justify-center"
+          style={{
+            height: `${100 / ROWS}%`,
+            aspectRatio: `1/1`,
+          }}
+        >
+          <XIcon
+            className="size-20"
+            strokeWidth={0.6}
+            onClick={() => setIsHovering(false)}
+          />
         </button>
       )}
     </div>

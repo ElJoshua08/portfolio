@@ -17,7 +17,7 @@ export function generatePrompt({
       className: "text-accent-blue",
     },
     {
-      content: `:${cwd} `,
+      content: `:${cwd}`,
       className: "text-muted-foreground",
     },
     {

@@ -10,7 +10,7 @@ gsap.registerPlugin(SplitText, ScrollTrigger);
 
 export const Hero = () => {
   return (
-    <main className="flex h-full min-h-0 w-full flex-row items-center justify-center">
+    <main className="flex h-full min-h-0 w-full flex-row items-start justify-start border-b">
       <div
         id="hero-left"
         className="relative flex h-full min-h-0 w-1/2 flex-col gap-y-12 overflow-hidden p-12"
@@ -26,7 +26,7 @@ export const Hero = () => {
             Josué
             <div
               id="hero-name-wrapper"
-              className="bg-background absolute inset-0 z-30 p-6"
+              className="bg-background absolute inset-0 z-30 scale-y-200 p-6"
             />
           </TextBlur>
 

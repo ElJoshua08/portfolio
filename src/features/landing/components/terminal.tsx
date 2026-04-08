@@ -42,6 +42,7 @@ export const Terminal = () => {
 
   const reset = () => {
     setTerminal({ lines: undefined });
+    inputRef.current ? (inputRef.current.value = "") : "";
   };
 
   const focusInput = () => inputRef.current?.focus();
@@ -62,19 +63,30 @@ export const TerminalHeader = () => {
   const { reset } = useTerminal();
 
   return (
-    <div className="bg-surface flex w-full items-center justify-between border-b p-4">
-      <span className="text-accent-green text-lg uppercase">
-        Super crazy terminal
+    <div
+      id="terminal-header"
+      className="bg-surface relative flex w-full items-center justify-between p-4"
+    >
+      <span
+        id="terminal-header-title"
+        className="text-accent-green text-lg uppercase"
+      >
+        Terminal
       </span>
 
       <div className="flex items-center gap-x-2">
-        <span className="size-3 cursor-pointer rounded-full bg-[#219A33]" />
-        <span className="size-3 cursor-pointer rounded-full bg-[#FEBC2E]" />
+        <span className="terminal-header-action size-3 cursor-pointer rounded-full bg-[#219A33]" />
+        <span className="terminal-header-action size-3 cursor-pointer rounded-full bg-[#FEBC2E]" />
         <span
           onClick={reset}
-          className="size-3 cursor-pointer rounded-full bg-[#D32B22]"
+          className="terminal-header-action cursor-pointer rounded-full bg-[#D32B22] not-first-of-type:size-3"
         />
       </div>
+
+      <div
+        id="terminal-header-bottom-border"
+        className="bg-border absolute bottom-0 left-0 h-px w-full"
+      />
     </div>
   );
 };
@@ -101,25 +113,43 @@ export const TerminalBody = () => {
           return (
             <div
               key={idx}
-              className="flex w-full items-center justify-start gap-x-2"
+              className="terminal-line flex w-full items-center justify-start gap-x-2"
             >
               <span className="grow">
                 {prompt &&
                   prompt.map((section, sectionIdx) => (
-                    <span key={sectionIdx} className={cn(section.className)}>
+                    <span
+                      key={sectionIdx}
+                      className={cn(
+                        section.className,
+                        "terminal-line-prompt-section",
+                      )}
+                    >
                       {section.content}
                     </span>
                   ))}
                 {body &&
                   body.map((section, sectionIdx) => (
-                    <span key={sectionIdx} className={cn(section.className)}>
+                    <span
+                      key={sectionIdx}
+                      className={cn(
+                        section.className,
+                        "terminal-line-body-section",
+                      )}
+                    >
                       {section.content}
                     </span>
                   ))}
               </span>
               {misc &&
                 misc.map((section, sectionIdx) => (
-                  <span key={sectionIdx} className={cn(section.className)}>
+                  <span
+                    key={sectionIdx}
+                    className={cn(
+                      section.className,
+                      "terminal-line-misc-section",
+                    )}
+                  >
                     {section.content}
                   </span>
                 ))}
@@ -141,7 +171,7 @@ const TerminalPrompt = () => {
       prompt,
       body: {
         content: command,
-        className: "text-foreground",
+        className: "terminal-line text-foreground",
       },
     };
 
@@ -152,7 +182,7 @@ const TerminalPrompt = () => {
   // TODO: now we actually need a command system. (now idea how to implement it now.)
 
   return (
-    <span className="flex w-full items-center">
+    <div id="terminal-prompt" className="flex w-full items-center">
       <span className="inline">
         {prompt.map((section, sectionIdx) => (
           <span key={sectionIdx} className={cn(section.className)}>
@@ -168,6 +198,6 @@ const TerminalPrompt = () => {
         }}
         className="ml-[1ch] flex-1 outline-0"
       />
-    </span>
+    </div>
   );
 };
