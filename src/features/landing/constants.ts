@@ -1,5 +1,12 @@
 import { TerminalLine, TerminalSection } from "@/features/landing/types";
 
+export const BLANK_LINE: TerminalLine = {
+  body: {
+    content: "_",
+    className: "text-background",
+  },
+};
+
 // Todo: This shit might be actually fkn better as a markdown, I
 // Todo: don't know how to use colors in a markdown tho.
 export const ABOUT_ME: TerminalSection[][] = [
