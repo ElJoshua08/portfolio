@@ -20,10 +20,10 @@ export default function Home() {
   // ? 242 LINES BEFORE CHANGE
   useGSAP(() => {
     const enter = gsap.timeline({
-      defaults: { ease: "power3.inOut" },
+      defaults: { ease: "back.out" },
+      delay: 0.4,
     });
 
-    enter.delay(1);
     enter.to(
       "#bottom-border",
       {
@@ -55,27 +55,24 @@ export default function Home() {
     );
 
     // Navbar
-    const logoChars = new SplitText("#logo", { type: "words" });
+    const logo = new SplitText("#logo", { type: "words" });
     gsap.set("#logo", { visibility: "visible" });
-    gsap.set(logoChars.words, { autoAlpha: 0, yPercent: 100 });
-    enter.to(
-      logoChars.words,
+    enter.from(
+      logo.words,
       {
-        autoAlpha: 1,
-        yPercent: 0,
+        autoAlpha: 0,
+        yPercent: 100,
         duration: 0.22,
         stagger: 0.15,
-        ease: "back.out",
       },
       ">0.3",
     );
 
-    gsap.set(".link-item", { yPercent: 100 });
-    enter.to(
+    enter.from(
       ".link-item",
       {
-        yPercent: 0,
-        autoAlpha: 1,
+        yPercent: 100,
+        autoAlpha: 0,
         duration: 0.22,
         stagger: 0.15,
         ease: "back.out(2.5)",
@@ -83,107 +80,83 @@ export default function Home() {
       ">",
     );
 
-    enter.fromTo(
+    enter.from(
       "#hero-name",
-      { y: 60 },
-      { y: 0, ease: "power3.out", duration: 0.6 },
-      "<-0.80",
+      { y: 60, duration: 0.6, ease: "power3.out" },
+      "<-0.60",
     );
 
-    enter.fromTo(
+    enter.to(
       "#hero-name-wrapper",
       {
-        opacity: 1,
-        backdropFilter: "blur(16px)",
+        autoAlpha: 0,
       },
-      {
-        backdropFilter: "blur(0px)",
-        opacity: 0,
-        duration: 0.55,
-      },
-      "<",
+      "<-0.1",
     );
 
     let nameSplit = new SplitText("#hero-surname", { type: "chars" });
     gsap.set("#hero-surname", { visibility: "visible" });
-    enter.fromTo(
+    enter.from(
       nameSplit.chars,
-      { y: 40, autoAlpha: 0, filter: "blur(12px)" },
       {
-        y: 0,
-        autoAlpha: 1,
-        duration: 0.6,
+        yPercent: 100,
+        autoAlpha: 0,
+        filter: "blur(12px)",
         ease: "back.out(2.5)",
-        filter: "blur(0px)",
+        duration: 0.6,
         stagger: 0.05,
       },
       "<0.15",
     );
 
-    const commentTop = new SplitText("#top-comment", {
-      type: "words",
-      autoSplit: true,
-    });
+    const commentTop = new SplitText("#top-comment", { type: "words" });
     gsap.set("#top-comment", { visibility: "visible" });
-    gsap.set(commentTop.words, { autoAlpha: 0, y: 35 });
-    enter.to(
+    enter.from(
       commentTop.words,
-      { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.06, ease: "back.out" },
+      { autoAlpha: 0, y: 60, duration: 0.35, stagger: 0.06 },
       "<0.35",
     );
 
-    enter.fromTo(
+    enter.from(
       ".container-card",
-      { y: -40, filter: "blur(12px)" },
-      {
-        y: 0,
-        autoAlpha: 1,
-        filter: "blur(0px)",
-        duration: 0.6,
-        ease: "back.out",
-      },
+      { y: 60, filter: "blur(12px)", autoAlpha: 0, duration: 0.6 },
       "<0.1",
     );
 
-    enter.fromTo(
+    enter.from(
       ".editor-number",
-      { y: -20, autoAlpha: 0, filter: "blur(12px)" },
       {
-        y: 0,
-        autoAlpha: 1,
+        y: -20,
+        autoAlpha: 0,
+        filter: "blur(12px)",
         duration: 0.25,
         stagger: 0.03,
-        filter: "blur(0px)",
       },
       "<",
     );
 
-    enter.fromTo(
+    enter.from(
       ".editor-line",
-      { y: 35, autoAlpha: 0, filter: "blur(6px)" },
       {
-        y: 0,
-        autoAlpha: 1,
+        y: 35,
+        autoAlpha: 0,
+        filter: "blur(6px)",
         duration: 0.18,
         stagger: 0.015,
-        filter: "blur(0px)",
-        ease: "back.out",
       },
       "<0.1",
     );
 
     const bottomComment = new SplitText("#bottom-comment", { type: "words" });
     gsap.set("#bottom-comment", { visibility: "visible" });
-    enter.fromTo(
+    enter.from(
       bottomComment.words,
-      { autoAlpha: 0, y: -20 },
-      { autoAlpha: 1, y: 0, duration: 0.65, stagger: 0.09 },
+      { autoAlpha: 0, y: -20, duration: 0.65, stagger: 0.09 },
       ">0.3",
     );
 
     // * Terminal
     gsap.set("#terminal-body", { visibility: "visible" });
-
     enter.to(
       "#terminal-header",
       {
@@ -231,18 +204,12 @@ export default function Home() {
       type: "chars",
     });
     gsap.set("#terminal-prompt", { visibility: "visible" });
-    enter.fromTo(
-      terminalPrompt.chars,
-      {
-        autoAlpha: 0,
-      },
-      {
-        autoAlpha: 1,
-        stagger: 0.06,
-        duration: 0.1,
-        ease: "none",
-      },
-    );
+    enter.from(terminalPrompt.chars, {
+      autoAlpha: 0,
+      stagger: 0.06,
+      duration: 0.1,
+      ease: "none",
+    });
   });
 
   // useGSAP(

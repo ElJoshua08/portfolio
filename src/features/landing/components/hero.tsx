@@ -31,7 +31,7 @@ export const Hero = () => {
           </TextBlur>
 
           <span
-            className="text-accent-green font-header z-20 -mt-16 ml-2 text-8xl font-semibold uppercase invisible"
+            className="text-accent-green font-header invisible z-20 -mt-16 ml-2 text-8xl font-semibold uppercase"
             style={{
               textShadow: `2px -4px 8px #232323`,
             }}
