@@ -17,7 +17,7 @@ const SKILLS: TerminalLine[] = [
   {
     body: [
       { content: "> ", className: "text-muted-foreground" },
-      { content: "TypeScript", className: "text-foreground" },
+      { content: "TypeScript", className: "text-foreground font-bold" },
       { content: " · advanced", className: "text-accent-blue" },
       {
         content:
@@ -42,7 +42,7 @@ const SKILLS: TerminalLine[] = [
   {
     body: [
       { content: "> ", className: "text-muted-foreground" },
-      { content: "Next.JS", className: "text-foreground" },
+      { content: "Next.JS", className: "text-foreground font-bold" },
       { content: " · advanced ", className: "text-accent-blue" },
       {
         content:
@@ -64,7 +64,7 @@ const SKILLS: TerminalLine[] = [
       { content: "React Native", className: "text-foreground font-bold" },
       { content: " · intermediate ", className: "text-accent-blue" },
       {
-        content: "// Expo-based. I don't use it a lot but I love when i do.",
+        content: "// Haven't used it a lot, but I can defend myself on it.",
         className: "text-muted-foreground italic",
       },
     ],
@@ -85,8 +85,7 @@ const SKILLS: TerminalLine[] = [
       { content: "TailwindCSS", className: "text-foreground font-bold" },
       { content: " · intermediate ", className: "text-accent-blue" },
       {
-        content:
-          "// Utility-first is the only way. Fast, consistent, scalable.",
+        content: "// THE ONLY PLAUSIBLE WAY. No CSS on a real project.",
         className: "text-muted-foreground italic",
       },
     ],
@@ -96,32 +95,36 @@ const SKILLS: TerminalLine[] = [
   {
     body: [
       {
-        content: "// frameworks",
+        content: "// animations",
         className: "text-secondary-foreground underline italic",
       },
     ],
   },
   {
-    body: [{
-      content: "I'm a person who really enjoys animations",
-      className: "text-foreground"
-    },{
-      content: "I'm a person who really enjoys animations",
-      className: "text-foreground"
-    }]
-  },
-  {
     body: [
-      { content: "> ", className: "text-accent-green" },
-      { content: "GSAP", className: "text-foreground font-bold" },
-      { content: " · advanced", className: "text-accent-blue" },
+      {
+        content: "I'm a person who really enjoys animations, ",
+        className: "text-foreground",
+      },
     ],
   },
   {
     body: [
       {
+        content: "So i really focus my time on learning about them.",
+        className: "text-foreground",
+      },
+    ],
+  },
+  BLANK_LINE,
+  {
+    body: [
+      { content: "> ", className: "text-accent-green" },
+      { content: "GSAP", className: "text-foreground font-bold" },
+      { content: " · advanced ", className: "text-accent-blue" },
+      {
         content:
-          "  Timelines, ScrollTrigger, SplitText — if it moves, it's GSAP.",
+          "// Timelines, ScrollTrigger, SplitText, basically if it moves, it's GSAP.",
         className: "text-muted-foreground italic",
       },
     ],
@@ -130,13 +133,10 @@ const SKILLS: TerminalLine[] = [
     body: [
       { content: "> ", className: "text-accent-green" },
       { content: "Framer Motion", className: "text-foreground font-bold" },
-      { content: " · high-intermediate", className: "text-accent-blue" },
-    ],
-  },
-  {
-    body: [
+      { content: " · intermediate ", className: "text-accent-blue" },
       {
-        content: "  Component-level animations. Great for React, fast to ship.",
+        content:
+          "// I use this for component-level animations, literally made for react.",
         className: "text-muted-foreground italic",
       },
     ],
@@ -145,22 +145,22 @@ const SKILLS: TerminalLine[] = [
     body: [
       { content: "> ", className: "text-accent-green" },
       { content: "Three.js", className: "text-foreground font-bold" },
-      { content: " · intermediate", className: "text-accent-blue" },
-    ],
-  },
-  {
-    body: [
+      { content: " · intermediate ", className: "text-accent-blue" },
       {
-        content: "  3D on the web. Still exploring — but I enjoy it a lot.",
+        content: "// 3D on the web. Still exploring.",
         className: "text-muted-foreground italic",
       },
     ],
   },
-  { body: { content: "", className: "" } },
-
   // Tools
+  BLANK_LINE,
   {
-    body: [{ content: "// tools", className: "text-muted-foreground italic" }],
+    body: [
+      {
+        content: "// tools",
+        className: "text-secondary-foreground italic underline",
+      },
+    ],
   },
   {
     body: [
@@ -171,47 +171,28 @@ const SKILLS: TerminalLine[] = [
   },
   {
     body: [
-      {
-        content:
-          "  Branching, rebasing, conventional commits. Version control is non-negotiable.",
-        className: "text-muted-foreground italic",
-      },
-    ],
-  },
-  {
-    body: [
       { content: "> ", className: "text-accent-green" },
       { content: "Docker", className: "text-foreground font-bold" },
       { content: " · intermediate", className: "text-accent-blue" },
     ],
   },
+  // Design
+  BLANK_LINE,
   {
     body: [
       {
-        content:
-          "  Containerizing projects. Consistent environments, no excuses.",
-        className: "text-muted-foreground italic",
+        content: "// design",
+        className: "text-secondary-foreground italic underline",
       },
     ],
-  },
-  { body: { content: "", className: "" } },
-
-  // Design
-  {
-    body: [{ content: "// design", className: "text-muted-foreground italic" }],
   },
   {
     body: [
       { content: "> ", className: "text-accent-green" },
       { content: "Figma", className: "text-foreground font-bold" },
-      { content: " · advanced", className: "text-accent-blue" },
-    ],
-  },
-  {
-    body: [
+      { content: " · advanced ", className: "text-accent-blue" },
       {
-        content:
-          "  I design before I code. Components, variables, auto-layout — all of it.",
+        content: "// Design first is the best friend of fast-shipping.",
         className: "text-muted-foreground italic",
       },
     ],
@@ -220,52 +201,19 @@ const SKILLS: TerminalLine[] = [
     body: [
       { content: "> ", className: "text-accent-green" },
       { content: "Blender", className: "text-foreground font-bold" },
-      { content: " · intermediate", className: "text-accent-blue" },
-    ],
-  },
-  {
-    body: [
+      { content: " · intermediate ", className: "text-accent-blue" },
       {
-        content: "  3D modeling and rendering for web assets and visuals.",
+        content: "// I'm  a total noob but I enjoy it.",
         className: "text-muted-foreground italic",
       },
     ],
   },
-  {
-    body: [
-      { content: "> ", className: "text-accent-green" },
-      { content: "Affinity Suite", className: "text-foreground font-bold" },
-      { content: " · intermediate", className: "text-accent-blue" },
-    ],
-  },
-  {
-    body: [
-      {
-        content:
-          "  Designer + Publisher for print and brand work. No subscription needed.",
-        className: "text-muted-foreground italic",
-      },
-    ],
-  },
-  {
-    body: [
-      { content: "> ", className: "text-accent-green" },
-      { content: "DaVinci Resolve", className: "text-foreground font-bold" },
-      { content: " · intermediate", className: "text-accent-blue" },
-    ],
-  },
-  {
-    body: [
-      {
-        content: "  Motion graphics and video editing. Fusion for compositing.",
-        className: "text-muted-foreground italic",
-      },
-    ],
-  },
+  BLANK_LINE,
 ];
+
 export const skills: Command = {
   name: "skills",
-  description: "A little bit about my stack.",
+  description: "Some bits of my usual stack.",
   handler({ addLine }) {
     SKILLS.forEach(addLine);
   },
