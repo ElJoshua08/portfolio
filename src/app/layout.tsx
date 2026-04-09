@@ -1,3 +1,4 @@
+import { Cursor } from "@/components/ui/cursor";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
@@ -15,7 +16,7 @@ const headerFont = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "Dev by Joshua",
-  description: "Hi, im Joshua! and this is my portfolio",
+  description: "Hey, im Joshua! and this is my portfolio",
 };
 
 export default function RootLayout({
@@ -34,7 +35,11 @@ export default function RootLayout({
         "font-mono",
       )}
     >
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {children}
+
+        <Cursor />
+      </body>
     </html>
   );
 }

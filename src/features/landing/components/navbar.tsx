@@ -1,5 +1,6 @@
 "use client";
 
+import { Magnetic } from "@/components/ui/magnetic";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -43,21 +44,20 @@ export const Navbar = () => {
           const isActive = pathname === link.href;
 
           return (
-            <li
-              key={link.name}
-              className="link-item invisible"
-            >
-              <Link
-                href={link.href}
-                className={cn(
-                  "text-foreground/75 font-semibold tracking-wider transition-colors duration-75",
-                  isActive && "text-accent-blue",
-                  !isActive && "hover:text-foreground",
-                )}
-              >
-                [ {link.name} ]
-              </Link>
-            </li>
+            <Magnetic key={link.name}>
+              <li data-mouse="morph" className="link-item invisible">
+                <Link
+                  href={link.href}
+                  className={cn(
+                    "text-foreground/75 font-semibold tracking-wider transition-colors duration-75",
+                    isActive && "text-accent-blue",
+                    !isActive && "hover:text-foreground",
+                  )}
+                >
+                  [ {link.name} ]
+                </Link>
+              </li>
+            </Magnetic>
           );
         })}
       </ul>

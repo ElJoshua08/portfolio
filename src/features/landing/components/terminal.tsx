@@ -3,9 +3,13 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { COMMANDS } from "@/features/landing/commands";
 import { TERMINAL_INITIALIZATION_LINES } from "@/features/landing/constants";
-import { TerminalLine, TerminalType } from "@/features/landing/types";
+import {
+  TerminalLine,
+  TerminalSection,
+  TerminalType,
+} from "@/features/landing/types";
 import { generatePrompt } from "@/features/landing/utils";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { createContext, useContext, useRef, useState } from "react";
 
 type TerminalContextType = {
@@ -76,11 +80,18 @@ export const TerminalHeader = () => {
       </span>
 
       <div className="flex items-center gap-x-2">
-        <span className="terminal-header-action invisible size-3 cursor-pointer rounded-full bg-[#219A33]" />
-        <span className="terminal-header-action invisible size-3 cursor-pointer rounded-full bg-[#FEBC2E]" />
         <span
+          data-mouse="morph"
+          className="terminal-header-action invisible size-3 rounded-full bg-[#219A33]"
+        />
+        <span
+          data-mouse="morph"
+          className="terminal-header-action invisible size-3 rounded-full bg-[#FEBC2E]"
+        />
+        <span
+          data-mouse="morph"
           onClick={reset}
-          className="terminal-header-action invisible cursor-pointer rounded-full bg-[#D32B22] not-first-of-type:size-3"
+          className="terminal-header-action invisible rounded-full bg-[#D32B22] not-first-of-type:size-3"
         />
       </div>
 
@@ -97,6 +108,7 @@ export const TerminalBody = () => {
   return (
     <ScrollArea
       id="terminal-body"
+      data-mouse="clickable"
       className="invisible flex h-full min-h-0 w-full flex-col items-start justify-start gap-y-1 overflow-y-auto p-4"
       onClick={focusInput}
     >
@@ -120,40 +132,16 @@ export const TerminalBody = () => {
               <span className="grow">
                 {prompt &&
                   prompt.map((section, sectionIdx) => (
-                    <span
-                      key={sectionIdx}
-                      className={cn(
-                        section.className,
-                        "terminal-line-prompt-section",
-                      )}
-                    >
-                      {section.content}
-                    </span>
+                    <LineSection section={section} key={sectionIdx} />
                   ))}
                 {body &&
                   body.map((section, sectionIdx) => (
-                    <span
-                      key={sectionIdx}
-                      className={cn(
-                        section.className,
-                        "terminal-line-body-section",
-                      )}
-                    >
-                      {section.content}
-                    </span>
+                    <LineSection section={section} key={sectionIdx} />
                   ))}
               </span>
               {misc &&
                 misc.map((section, sectionIdx) => (
-                  <span
-                    key={sectionIdx}
-                    className={cn(
-                      section.className,
-                      "terminal-line-misc-section",
-                    )}
-                  >
-                    {section.content}
-                  </span>
+                  <LineSection section={section} key={sectionIdx} />
                 ))}
             </div>
           );
@@ -198,9 +186,7 @@ const TerminalPrompt = () => {
     <div id="terminal-prompt" className="invisible flex w-full items-center">
       <span className="inline">
         {prompt.map((section, sectionIdx) => (
-          <span key={sectionIdx} className={cn(section.className)}>
-            {section.content}
-          </span>
+          <LineSection key={sectionIdx} section={section} />
         ))}
       </span>
 
@@ -212,5 +198,24 @@ const TerminalPrompt = () => {
         className="ml-[1ch] flex-1 outline-0"
       />
     </div>
+  );
+};
+
+const LineSection = ({ section }: { section: TerminalSection }) => {
+  if (section.href) {
+    return (
+      <Link
+        href={section.href}
+        className={section.className as string | undefined}
+      >
+        {section.content}
+      </Link>
+    );
+  }
+
+  return (
+    <span className={section.className as string | undefined}>
+      {section.content}
+    </span>
   );
 };

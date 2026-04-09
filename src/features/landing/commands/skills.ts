@@ -16,7 +16,7 @@ const SKILLS: TerminalLine[] = [
   },
   {
     body: [
-      { content: "> ", className: "text-muted-foreground" },
+      { content: "> ", className: "text-accent-green" },
       { content: "TypeScript", className: "text-foreground font-bold" },
       { content: " · advanced", className: "text-accent-blue" },
       {
@@ -41,7 +41,7 @@ const SKILLS: TerminalLine[] = [
   },
   {
     body: [
-      { content: "> ", className: "text-muted-foreground" },
+      { content: "> ", className: "text-accent-green" },
       { content: "Next.JS", className: "text-foreground font-bold" },
       { content: " · advanced ", className: "text-accent-blue" },
       {
@@ -145,7 +145,7 @@ const SKILLS: TerminalLine[] = [
     body: [
       { content: "> ", className: "text-accent-green" },
       { content: "Three.js", className: "text-foreground font-bold" },
-      { content: " · intermediate ", className: "text-accent-blue" },
+      { content: " · noobie ", className: "text-accent-blue" },
       {
         content: "// 3D on the web. Still exploring.",
         className: "text-muted-foreground italic",
@@ -201,7 +201,7 @@ const SKILLS: TerminalLine[] = [
     body: [
       { content: "> ", className: "text-accent-green" },
       { content: "Blender", className: "text-foreground font-bold" },
-      { content: " · intermediate ", className: "text-accent-blue" },
+      { content: " · noobie ", className: "text-accent-blue" },
       {
         content: "// I'm  a total noob but I enjoy it.",
         className: "text-muted-foreground italic",

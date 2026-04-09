@@ -140,28 +140,12 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 cursor-none;
   }
   body {
     @apply bg-background text-foreground;
   }
   html {
     @apply font-body;
-  }
-
-  .text-blur {
-    position: relative;
-  }
-
-  .text-blur::after {
-    content: "JOSUÉ";
-    position: absolute;
-    top: 0;
-    left: 0;
-    filter: blur(34px);
-    opacity: 0.6;
-
-    mask-image: linear-gradient(to bottom, black, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, black, transparent);
   }
 }

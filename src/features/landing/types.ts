@@ -3,6 +3,7 @@ import type { ClassValue } from "clsx";
 export type TerminalSection = {
   content: string;
   className: ClassValue;
+  href?: string;
 };
 
 export type TerminalLine = {

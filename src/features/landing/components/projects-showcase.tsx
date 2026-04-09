@@ -1,6 +1,8 @@
 "use client";
 
+import { Magnetic } from "@/components/ui/magnetic";
 import { TextBlur } from "@/components/ui/text-blur";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 export const ProjectsShowcase = () => {
@@ -8,8 +10,9 @@ export const ProjectsShowcase = () => {
   const stageRef = useRef<HTMLDivElement>(null);
   const nOutlineRef = useRef<HTMLSpanElement>(null);
   const nFilledRef = useRef<HTMLDivElement>(null);
-  const cursorRef = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
+
+  console.log(revealed, "Is revealed");
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -37,12 +40,10 @@ export const ProjectsShowcase = () => {
 
     const onEnter = () => {
       inside = true;
-      if (cursorRef.current) cursorRef.current.style.opacity = "1";
     };
 
     const onLeave = () => {
       inside = false;
-      if (cursorRef.current) cursorRef.current.style.opacity = "0";
       if (nFilledRef.current && !isRevealing) {
         nFilledRef.current.style.webkitMaskImage =
           "radial-gradient(circle 0px at 50% 50%, black 0px, transparent 0px)";
@@ -55,19 +56,10 @@ export const ProjectsShowcase = () => {
       if (isRevealing) return;
       isRevealing = true;
 
-      const cursor = cursorRef.current;
       const filled = nFilledRef.current;
       const outline = nOutlineRef.current;
 
-      if (!cursor || !filled || !outline) return;
-
-      // click feedback — cursor shrinks
-      cursor.style.transition = "transform 0.1s ease-out";
-      cursor.style.transform = "translate(-50%, -50%) scale(0.4)";
-
-      setTimeout(() => {
-        cursor.style.transform = "translate(-50%, -50%) scale(1)";
-      }, 120);
+      if (!filled || !outline) return;
 
       // expand mask to cover everything
       const diagonal = Math.sqrt(
@@ -106,10 +98,6 @@ export const ProjectsShowcase = () => {
           requestAnimationFrame(animateMask);
         } else {
           // mask fully expanded — scale out + blur + fade both layers
-          if (!cursor) {
-            return;
-          }
-
           const exitDuration = "0.7s";
           const exitEase = "cubic-bezier(0.4, 0, 0.2, 1)";
 
@@ -121,9 +109,6 @@ export const ProjectsShowcase = () => {
             el.style.opacity = "0";
             el.style.filter = "blur(20px)";
           });
-
-          cursor.style.transition = `opacity 0.3s`;
-          cursor.style.opacity = "0";
 
           setTimeout(() => setRevealed(true), 500);
         }
@@ -149,8 +134,8 @@ export const ProjectsShowcase = () => {
       const cy = stage.offsetHeight / 2;
 
       if (nOutlineRef.current && !isRevealing) {
-        const dx = (currentX - cx) * 0.055;
-        const dy = (currentY - cy) * 0.055;
+        const dx = (currentX - cx) * 0.045;
+        const dy = (currentY - cy) * 0.045;
         nOutlineRef.current.style.transform = `translate(${dx}px, ${dy}px)`;
       }
 
@@ -164,11 +149,6 @@ export const ProjectsShowcase = () => {
         const mask = `radial-gradient(circle 90px at ${fillX}px ${fillY}px, black 90px, transparent 90px)`;
         nFilledRef.current.style.webkitMaskImage = mask;
         nFilledRef.current.style.maskImage = mask;
-      }
-
-      if (cursorRef.current) {
-        cursorRef.current.style.left = `${currentX}px`;
-        cursorRef.current.style.top = `${currentY}px`;
       }
 
       raf = requestAnimationFrame(tick);
@@ -188,94 +168,101 @@ export const ProjectsShowcase = () => {
   return (
     <div
       ref={containerRef}
-      className="bg-background relative z-10 flex h-screen min-h-screen w-full flex-col items-start justify-start p-12"
+      className="bg-background relative z-10 flex h-screen min-h-screen w-full flex-col items-start justify-start overflow-hidden p-12"
     >
-      <header className="flex w-full items-center justify-between">
-        <h1 className="relative inline-flex flex-col items-start justify-start gap-y-2">
-          <TextBlur
-            className="from-foreground font-header via-foreground relative z-0 -mt-4 -ml-4 inline-block cursor-default bg-linear-to-b to-[#11111] bg-clip-text p-6 text-8xl font-bold text-transparent"
-            blurSteps={8}
-          >
-            Selected
-          </TextBlur>
-          <span className="text-accent-green font-header pointer-event-none peer z-10 -mt-18 ml-48 text-8xl font-bold select-none">
-            Work
-          </span>
-          <span className="text-secondary-foreground absolute top-1/2 left-0 mt-8 ml-2 block -translate-y-1/2 font-bold">
-            // 01 - Projects
-          </span>
-        </h1>
-        <span className="text-accent-blue">// ? Click to reveal...</span>
+      <header className="flex h-35 w-full items-center">
+        {!revealed ? (
+          <>
+            <h1 className="relative inline-flex flex-col items-start justify-start gap-y-2">
+              <TextBlur
+                className="from-foreground font-header via-foreground relative z-0 -mt-4 -ml-4 inline-block bg-linear-to-b to-[#11111] bg-clip-text p-6 text-8xl font-bold text-transparent"
+                blurSteps={8}
+              >
+                Selected
+              </TextBlur>
+              <span className="text-accent-green font-header pointer-event-none peer z-10 -mt-18 ml-48 text-8xl font-bold select-none">
+                Work
+              </span>
+              <span className="text-secondary-foreground absolute top-1/2 left-0 mt-8 ml-2 block -translate-y-1/2 font-bold">
+                // 01 - Projects
+              </span>
+            </h1>
+            <Magnetic strength={1} className="ml-auto">
+              <span className="text-accent-blue">// ? Click to reveal...</span>
+            </Magnetic>
+          </>
+        ) : (
+          <h3 className="relative inline-flex flex-col items-start justify-start gap-y-2">
+            <TextBlur
+              className="from-accent-blue font-header via-accent-blue relative z-0 -mt-4 -ml-4 inline-block bg-linear-to-b to-[#11111] bg-clip-text p-6 text-7xl font-bold text-transparent"
+              blurSteps={8}
+            >
+              Stackd
+            </TextBlur>
+            <span className="absolute top-1/2 left-0 mt-6 ml-2 block -translate-y-1/2 text-2xl font-bold">
+              Poker Tracker
+            </span>
+          </h3>
+        )}
       </header>
 
-      <main className="flex h-full w-full grow cursor-none items-center justify-center">
-        <div
-          ref={stageRef}
-          className="relative h-full min-h-full w-full min-w-full overflow-hidden"
-        >
-          {!revealed ? (
-            <>
-              <div
-                ref={nFilledRef}
-                className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
-                style={{
-                  willChange: "transform, mask-image",
-                  WebkitMaskImage:
-                    "radial-gradient(circle 0px at 50% 50%, black 0px, transparent 0px)",
-                  maskImage:
-                    "radial-gradient(circle 0px at 50% 50%, black 0px, transparent 0px)",
-                }}
+      <main className="flex h-full w-full grow items-center justify-center">
+        {!revealed && (
+          <div
+            ref={stageRef}
+            className="relative h-full min-h-full w-full min-w-full overflow-hidden"
+          >
+            <div
+              ref={nFilledRef}
+              className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
+              style={{
+                willChange: "transform, mask-image",
+                WebkitMaskImage:
+                  "radial-gradient(circle 0px at 50% 50%, black 0px, transparent 0px)",
+                maskImage:
+                  "radial-gradient(circle 0px at 50% 50%, black 0px, transparent 0px)",
+              }}
+            >
+              <span
+                className="text-accent-blue text-[800px] leading-none font-bold select-none"
+                style={{ willChange: "transform" }}
               >
-                <span
-                  className="font-header text-accent-blue text-[600px] leading-none font-bold select-none"
-                  style={{ willChange: "transform" }}
-                >
-                  01
-                </span>
-              </div>
-
-              <div className="pointer-events-none absolute inset-0 z-20 flex cursor-pointer items-center justify-center">
-                <span
-                  ref={nOutlineRef}
-                  className="font-header text-[600px] leading-none font-bold text-transparent select-none"
-                  style={{
-                    WebkitTextStroke: "3px #36184d",
-                    willChange: "transform",
-                  }}
-                >
-                  01
-                </span>
-              </div>
-
-              <div
-                ref={cursorRef}
-                className="pointer-events-none absolute z-30 size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
-                style={{ opacity: 0 }}
-              />
-            </>
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <span className="text-muted-foreground font-mono text-sm">
-                project content here
+                01
               </span>
             </div>
-          )}
-        </div>
+
+            <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+              <span
+                ref={nOutlineRef}
+                className="text-[800px] leading-none font-bold text-transparent select-none"
+                style={{
+                  WebkitTextStroke: "3px #36184d",
+                  willChange: "transform",
+                }}
+              >
+                01
+              </span>
+            </div>
+          </div>
+        )}
+
+        {revealed && (
+          <div
+            data-mouse="zoom"
+            className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-md border"
+          >
+            <Image
+              data-mouse="zoom"
+              src="/grain-lg.jpg"
+              alt="some alt"
+              fill
+              className="absolute h-full w-full object-cover"
+            />
+          </div>
+        )}
       </main>
 
-      <footer className="hidden w-full items-center justify-between">
-        <h3 className="relative inline-flex flex-col items-start justify-start gap-y-2">
-          <TextBlur
-            className="from-accent-blue font-header via-accent-blue relative z-0 -mt-4 -ml-4 inline-block cursor-default bg-linear-to-b to-[#11111] bg-clip-text p-6 text-7xl font-bold text-transparent"
-            blurSteps={8}
-          >
-            Stackd
-          </TextBlur>
-          <span className="absolute top-1/2 left-0 mt-6 ml-2 block -translate-y-1/2 text-2xl font-bold">
-            Poker Tracker
-          </span>
-        </h3>
-      </footer>
+      <footer className="hidden w-full items-center justify-between"></footer>
     </div>
   );
 };

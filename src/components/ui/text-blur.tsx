@@ -14,7 +14,7 @@ export const TextBlur = ({
   ...props
 }: TextBlurProps) => {
   return (
-    <Tag {...props} className={cn(props.className, "relative group")}>
+    <Tag {...props} className={cn(props.className, "group relative")}>
       {children}
       <span className="pointer-events-none absolute inset-0" aria-hidden="true">
         {Array.from({ length: blurSteps }).map((_, i) => {
@@ -30,7 +30,7 @@ export const TextBlur = ({
           return (
             <div
               key={i}
-              className="text-blur absolute inset-0 transition-opacity duration-200 group-hover:opacity-0"
+              className="absolute inset-0 transition-opacity duration-200 group-hover:opacity-0"
               style={{
                 backdropFilter: `blur(${blur.toFixed(2)}px)`,
                 WebkitBackdropFilter: `blur(${blur.toFixed(2)}px)`,

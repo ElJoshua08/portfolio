@@ -21,7 +21,7 @@ export const Hero = () => {
         >
           <TextBlur
             id="hero-name"
-            className="from-foreground font-header via-foreground relative -mt-4 -ml-4 inline-block cursor-default bg-linear-to-b to-[#11111] bg-clip-text p-6 text-9xl font-bold text-transparent uppercase"
+            className="from-foreground font-header via-foreground relative -mt-4 -ml-4 inline-block bg-linear-to-b to-[#11111] bg-clip-text p-6 text-9xl font-bold text-transparent uppercase"
           >
             Josué
             <div

@@ -2,6 +2,7 @@
 
 "use client";
 
+import { Magnetic } from "@/components/ui/magnetic";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ABOUT_ME } from "@/features/landing/constants";
 import { cn } from "@/lib/utils";
@@ -44,9 +45,9 @@ export const TextEditor = () => {
         {"// This might have taken me a while :8"
           .split(" ")
           .map((word, idx) => (
-            <span key={idx} className="hover:text-accent-blue cursor-default">
-              {word}{" "}
-            </span>
+            <Magnetic key={idx} className="inline">
+              <span className="hover:text-accent-blue">{word} </span>
+            </Magnetic>
           ))}
       </span>
     </div>
