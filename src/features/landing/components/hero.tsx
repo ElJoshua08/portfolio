@@ -31,7 +31,7 @@ export const Hero = () => {
           </TextBlur>
 
           <span
-            className="text-accent-green font-header z-20 -mt-16 ml-2 text-8xl font-semibold uppercase"
+            className="text-accent-green font-header z-20 -mt-16 ml-2 text-8xl font-semibold uppercase invisible"
             style={{
               textShadow: `2px -4px 8px #232323`,
             }}
@@ -46,7 +46,7 @@ export const Hero = () => {
         {/* Right border */}
         <div
           id="right-border"
-          className="bg-border absolute top-0 right-0 -z-10 h-full w-px"
+          className="bg-border absolute top-0 right-0 -z-10 h-0 w-px"
         />
       </div>
       <Terminal />

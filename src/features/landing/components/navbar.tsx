@@ -27,13 +27,13 @@ export const Navbar = () => {
       {/* Bottom border */}
       <div
         id="bottom-border"
-        className="bg-border absolute bottom-0 left-0 h-px w-full"
+        className="bg-border absolute bottom-0 left-0 h-px w-0"
       />
 
       <Link
         href="/"
         id="logo"
-        className="text-accent-green font-header font-bold tracking-widest uppercase"
+        className="text-accent-green font-header invisible font-bold tracking-widest uppercase"
       >
         Josue Diaz Martinez
       </Link>
@@ -43,7 +43,10 @@ export const Navbar = () => {
           const isActive = pathname === link.href;
 
           return (
-            <li key={link.name} className="link-item">
+            <li
+              key={link.name}
+              className="link-item invisible"
+            >
               <Link
                 href={link.href}
                 className={cn(

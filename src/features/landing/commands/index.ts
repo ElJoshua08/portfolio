@@ -12,3 +12,4 @@ export const COMMANDS: Record<string, Command> = {
   resume,
   skills,
 };
+  

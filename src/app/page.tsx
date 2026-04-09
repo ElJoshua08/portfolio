@@ -16,14 +16,16 @@ export default function Home() {
 
   // TODO: animations starts just a little bit after page is loaded, so all the widths etc should be already setted
   // TODO: that way although the page loads before the animation starts nothing is visible, then we just need to change fromTo() -> to()
-  useGSAP(() => {
-    const enter = gsap.timeline({ defaults: { ease: "power3.inOut" } });
 
-    enter.fromTo(
+  // ? 242 LINES BEFORE CHANGE
+  useGSAP(() => {
+    const enter = gsap.timeline({
+      defaults: { ease: "power3.inOut" },
+    });
+
+    enter.delay(1);
+    enter.to(
       "#bottom-border",
-      {
-        width: 0,
-      },
       {
         width: `100%`,
         duration: 1.3,
@@ -32,11 +34,8 @@ export default function Home() {
       "<0.35",
     );
 
-    enter.fromTo(
+    enter.to(
       "#right-border",
-      {
-        height: 0,
-      },
       {
         height: `100%`,
         duration: 0.8,
@@ -45,11 +44,8 @@ export default function Home() {
       "<0.66",
     );
 
-    enter.fromTo(
+    enter.to(
       "#terminal-header-bottom-border",
-      {
-        width: 0,
-      },
       {
         width: `100%`,
         duration: 0.85,
@@ -59,41 +55,30 @@ export default function Home() {
     );
 
     // Navbar
-    const logoChars = new SplitText("#logo", {
-      type: "words",
-      linesClass: "line",
-      autoSplit: true,
-      mask: "lines",
-    });
-
-    enter.fromTo(
+    const logoChars = new SplitText("#logo", { type: "words" });
+    gsap.set("#logo", { visibility: "visible" });
+    gsap.set(logoChars.words, { autoAlpha: 0, yPercent: 100 });
+    enter.to(
       logoChars.words,
       {
-        yPercent: 100,
-        opacity: 0,
-      },
-      {
+        autoAlpha: 1,
         yPercent: 0,
-        opacity: 1,
         duration: 0.22,
         stagger: 0.15,
-        ease: "expo.out",
+        ease: "back.out",
       },
       ">0.3",
     );
 
-    enter.fromTo(
+    gsap.set(".link-item", { yPercent: 100 });
+    enter.to(
       ".link-item",
       {
-        yPercent: 100,
-        opacity: 0,
-      },
-      {
         yPercent: 0,
-        opacity: 1,
+        autoAlpha: 1,
         duration: 0.22,
         stagger: 0.15,
-        ease: "expo.out",
+        ease: "back.out(2.5)",
       },
       ">",
     );
@@ -119,38 +104,37 @@ export default function Home() {
       "<",
     );
 
-    const surnameChars = new SplitText("#hero-surname", {
-      type: "chars",
-    });
-
+    let nameSplit = new SplitText("#hero-surname", { type: "chars" });
+    gsap.set("#hero-surname", { visibility: "visible" });
     enter.fromTo(
-      surnameChars.chars,
+      nameSplit.chars,
       { y: 40, autoAlpha: 0, filter: "blur(12px)" },
       {
         y: 0,
         autoAlpha: 1,
         duration: 0.6,
-        ease: "back.out",
+        ease: "back.out(2.5)",
         filter: "blur(0px)",
         stagger: 0.05,
       },
       "<0.15",
     );
 
-    const topWords = new SplitText(".top-comment", {
+    const commentTop = new SplitText("#top-comment", {
       type: "words",
+      autoSplit: true,
     });
-
-    enter.fromTo(
-      topWords.words,
-      { autoAlpha: 0, y: 35 },
-      { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.03, ease: "back.out" },
+    gsap.set("#top-comment", { visibility: "visible" });
+    gsap.set(commentTop.words, { autoAlpha: 0, y: 35 });
+    enter.to(
+      commentTop.words,
+      { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.06, ease: "back.out" },
       "<0.35",
     );
 
     enter.fromTo(
       ".container-card",
-      { y: -40, autoAlpha: 0, filter: "blur(12px)" },
+      { y: -40, filter: "blur(12px)" },
       {
         y: 0,
         autoAlpha: 1,
@@ -188,36 +172,34 @@ export default function Home() {
       "<0.1",
     );
 
-    const bottomWords = new SplitText(".bottom-comment", {
-      type: "words",
-      mask: "lines",
-    });
-
+    const bottomComment = new SplitText("#bottom-comment", { type: "words" });
+    gsap.set("#bottom-comment", { visibility: "visible" });
     enter.fromTo(
-      bottomWords.words,
+      bottomComment.words,
       { autoAlpha: 0, y: -20 },
       { autoAlpha: 1, y: 0, duration: 0.65, stagger: 0.09 },
       ">0.3",
     );
 
     // * Terminal
-    enter.from(
+    gsap.set("#terminal-body", { visibility: "visible" });
+
+    enter.to(
       "#terminal-header",
       {
-        backgroundColor: "var(--background)",
+        backgroundColor: "var(--surface)",
         duration: 0.3,
       },
       "<-1.3",
     );
 
-    const terminalTitleChars = new SplitText("#terminal-header-title", {
+    const terminalTitle = new SplitText("#terminal-header-title", {
       type: "chars",
     });
-
+    gsap.set("#terminal-header-title", { visibility: "visible" });
     enter.from(
-      terminalTitleChars.chars,
+      terminalTitle.chars,
       { autoAlpha: 0, y: 15, duration: 0.15, stagger: 0.03, ease: "back.out" },
-
       "<0.3",
     );
 
@@ -245,12 +227,12 @@ export default function Home() {
       "<0.1",
     );
 
-    const terminalPromptChars = new SplitText("#terminal-prompt", {
+    const terminalPrompt = new SplitText("#terminal-prompt", {
       type: "chars",
     });
-
+    gsap.set("#terminal-prompt", { visibility: "visible" });
     enter.fromTo(
-      terminalPromptChars.chars,
+      terminalPrompt.chars,
       {
         autoAlpha: 0,
       },

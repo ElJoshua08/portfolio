@@ -9,10 +9,10 @@ import { cn } from "@/lib/utils";
 export const TextEditor = () => {
   return (
     <div className="flex h-full min-h-0 w-full flex-col items-start justify-start gap-y-3 overflow-y-hidden">
-      <span className="text-muted-foreground top-comment">
+      <span id="top-comment" className="text-muted-foreground invisible">
         // A little bit of <span className="text-accent-green">myself</span>
       </span>
-      <ScrollArea className="container-card bg-card flex min-h-0 w-4/5 max-w-2xl grow flex-col items-start justify-start gap-y-2 overflow-y-auto rounded-xs py-4">
+      <ScrollArea className="container-card bg-card invisible flex min-h-0 w-4/5 max-w-2xl grow flex-col items-start justify-start gap-y-2 overflow-y-auto rounded-xs py-4">
         <span className="text-muted-foreground mb-3 inline-block pl-4">
           about-me.txt
         </span>
@@ -40,7 +40,7 @@ export const TextEditor = () => {
           </div>
         ))}
       </ScrollArea>
-      <span className="text-muted-foreground bottom-comment">
+      <span id="bottom-comment" className="text-muted-foreground invisible">
         {"// This might have taken me a while :8"
           .split(" ")
           .map((word, idx) => (

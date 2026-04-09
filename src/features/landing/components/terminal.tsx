@@ -66,27 +66,27 @@ export const TerminalHeader = () => {
   return (
     <div
       id="terminal-header"
-      className="bg-surface relative flex w-full items-center justify-between p-4"
+      className="bg-background relative flex w-full items-center justify-between p-4"
     >
       <span
         id="terminal-header-title"
-        className="text-accent-green text-lg uppercase"
+        className="text-accent-green invisible text-lg uppercase"
       >
         Terminal
       </span>
 
       <div className="flex items-center gap-x-2">
-        <span className="terminal-header-action size-3 cursor-pointer rounded-full bg-[#219A33]" />
-        <span className="terminal-header-action size-3 cursor-pointer rounded-full bg-[#FEBC2E]" />
+        <span className="terminal-header-action invisible size-3 cursor-pointer rounded-full bg-[#219A33]" />
+        <span className="terminal-header-action invisible size-3 cursor-pointer rounded-full bg-[#FEBC2E]" />
         <span
           onClick={reset}
-          className="terminal-header-action cursor-pointer rounded-full bg-[#D32B22] not-first-of-type:size-3"
+          className="terminal-header-action invisible cursor-pointer rounded-full bg-[#D32B22] not-first-of-type:size-3"
         />
       </div>
 
       <div
         id="terminal-header-bottom-border"
-        className="bg-border absolute bottom-0 left-0 h-px w-full"
+        className="bg-border absolute bottom-0 left-0 h-px w-0"
       />
     </div>
   );
@@ -96,7 +96,8 @@ export const TerminalBody = () => {
   const { terminal, focusInput } = useTerminal();
   return (
     <ScrollArea
-      className="flex h-full min-h-0 w-full flex-col items-start justify-start gap-y-1 overflow-y-auto p-4"
+      id="terminal-body"
+      className="invisible flex h-full min-h-0 w-full flex-col items-start justify-start gap-y-1 overflow-y-auto p-4"
       onClick={focusInput}
     >
       {terminal.lines &&
@@ -172,7 +173,7 @@ const TerminalPrompt = () => {
 
     const newLine: TerminalLine = {
       prompt,
-      body: { content: input, className: "terminal-line text-foreground" },
+      body: { content: input, className: "text-foreground" },
     };
     addLine(newLine);
 
@@ -194,7 +195,7 @@ const TerminalPrompt = () => {
   // TODO: now we actually need a command system. (now idea how to implement it now.)
 
   return (
-    <div id="terminal-prompt" className="flex w-full items-center">
+    <div id="terminal-prompt" className="invisible flex w-full items-center">
       <span className="inline">
         {prompt.map((section, sectionIdx) => (
           <span key={sectionIdx} className={cn(section.className)}>
