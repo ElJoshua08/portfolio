@@ -9,7 +9,6 @@ import {
   TerminalType,
 } from "@/features/landing/types";
 import { generatePrompt } from "@/features/landing/utils";
-import Link from "next/link";
 import { createContext, useContext, useRef, useState } from "react";
 
 type TerminalContextType = {
@@ -204,12 +203,13 @@ const TerminalPrompt = () => {
 const LineSection = ({ section }: { section: TerminalSection }) => {
   if (section.href) {
     return (
-      <Link
+      <a
         href={section.href}
+        target="_blank"
         className={section.className as string | undefined}
       >
         {section.content}
-      </Link>
+      </a>
     );
   }
 

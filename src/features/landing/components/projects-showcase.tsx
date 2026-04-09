@@ -224,7 +224,7 @@ export const ProjectsShowcase = () => {
               }}
             >
               <span
-                className="text-accent-blue text-[800px] leading-none font-bold select-none"
+                className="text-accent-blue text-[800px] leading-none font-thin select-none"
                 style={{ willChange: "transform" }}
               >
                 01
@@ -234,7 +234,7 @@ export const ProjectsShowcase = () => {
             <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
               <span
                 ref={nOutlineRef}
-                className="text-[800px] leading-none font-bold text-transparent select-none"
+                className="text-[800px] leading-none font-thin text-transparent select-none"
                 style={{
                   WebkitTextStroke: "3px #36184d",
                   willChange: "transform",
