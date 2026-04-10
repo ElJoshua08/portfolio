@@ -90,7 +90,7 @@ export default function Home() {
       "<-0.1",
     );
 
-    let nameSplit = new SplitText("#hero-surname", { type: "chars" });
+    const nameSplit = new SplitText("#hero-surname", { type: "chars" });
     gsap.set("#hero-surname", { visibility: "visible" });
     enter.from(
       nameSplit.chars,
@@ -301,6 +301,7 @@ export default function Home() {
         <Navbar />
         <Hero />
       </div>
+      <ProjectsShowcase />
       <ProjectsShowcase />
     </div>
   );

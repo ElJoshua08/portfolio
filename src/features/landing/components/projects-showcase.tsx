@@ -161,11 +161,9 @@ export const ProjectsShowcase = () => {
             el.style.filter = "blur(20px)";
           });
 
-          // header out
           gsap.to("#showcase-header-out", {
-            y: -40,
-            autoAlpha: 0,
-            duration: 0.5,
+            scaleY: 0,
+            duration: 0.4,
             ease: "power3.in",
           });
 
@@ -296,7 +294,7 @@ export const ProjectsShowcase = () => {
             className="relative h-full w-full overflow-hidden"
           >
             <Image
-              src="/landing2.webp"
+              src="/landing3.webp"
               alt="Stackd project"
               fill
               className="object-cover object-top"
@@ -326,15 +324,12 @@ export const ProjectsShowcase = () => {
                 >
                   Stackd
                 </h1>
-                <span className="font-header z-30 -mt-10 text-3xl font-bold text-white">
+                <span className="font-header text-foreground z-30 -mt-10 text-3xl font-bold">
                   Poker Tracker
                 </span>
-                <div id="project-sub" className="font-mono text-xs text-[#555]">
-                  poker tracker · Feb. 2026
-                </div>
                 <p
                   id="project-desc"
-                  className="max-w-sm text-sm leading-relaxed text-[#666]"
+                  className="text-foreground/75 max-w-sm text-sm leading-relaxed tracking-wide"
                 >
                   A real-time multiplayer poker tracker built to manage
                   sessions, track stats, and visualize your game over time.

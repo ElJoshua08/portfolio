@@ -30,7 +30,7 @@ export const TextBlur = ({
           return (
             <div
               key={i}
-              className="absolute inset-0 transition-opacity duration-200 group-hover:opacity-0"
+              className="blur-section absolute inset-0 transition-opacity duration-200 group-hover:opacity-0"
               style={{
                 backdropFilter: `blur(${blur.toFixed(2)}px)`,
                 WebkitBackdropFilter: `blur(${blur.toFixed(2)}px)`,
