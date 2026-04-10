@@ -2,7 +2,7 @@
 
 import { Hero } from "@/features/landing/components/hero";
 import { Navbar } from "@/features/landing/components/navbar";
-import { ProjectsShowcase } from "@/features/landing/components/projects-showcase";
+import { ProjectShowcase } from "@/features/landing/components/project-showcase";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
@@ -208,89 +208,35 @@ export default function Home() {
     });
   });
 
-  // useGSAP(
-  //   () => {
-  //     const exit = gsap.timeline({
-  //       defaults: { ease: "none" },
-  //       scrollTrigger: {
-  //         trigger: containerRef.current!,
-  //         start: "top top",
-  //         end: "+=350vh",
-  //         scrub: true,
-  //         pin: true,
-  //         invalidateOnRefresh: true,
-  //       },
-  //     });
+  useGSAP(() => {
+    const projectsArray = gsap.utils.toArray(".project-showcase");
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#projects-scroll",
+        pin: true,
+        scrub: 1,
+        start: "top top",
+        snap: {
+          snapTo: [
+            0,
+            ...projectsArray.map(
+              (_, i) => 0.1 + (i / (projectsArray.length - 1)) * (1 - 0.1),
+            ),
+          ],
+          duration: { min: 0.2, max: 0.3 },
+          delay: 0.1,
+          ease: "power1.inOut",
+        },
+      },
+    });
 
-  //     exit
-  //       .to(
-  //         "#hero-name .text-blur",
-  //         { y: -60, backdropFilter: "blur(0px)", duration: 0.4, stagger: 0.03 },
-  //         "<",
-  //       )
-  //       .to("#hero-name-wrapper", {
-  //         opacity: 1,
-  //         backdropFilter: "blur(16px)",
-  //       })
-  //       .to(
-  //         "#hero-surname",
-  //         {
-  //           autoAlpha: 0,
-  //           y: -60,
-  //           duration: 0.4,
-  //         },
-  //         "<-0.2",
-  //       )
-  //       .to(".top-comment", { y: -20, autoAlpha: 0, duration: 0.3 }, ">-0.1")
-  //       .to(
-  //         ".editor-number",
-  //         { y: -20, autoAlpha: 0, duration: 0.3, stagger: 0.03 },
-  //         "<",
-  //       )
-  //       .to(
-  //         ".editor-line",
-  //         { y: -20, autoAlpha: 0, duration: 0.3, stagger: 0.06 },
-  //         "<0.15",
-  //       )
-  //       .to(
-  //         ".container-card",
-  //         { y: -40, autoAlpha: 0, filter: "blur(12px)", duration: 1 },
-  //         "<0.4",
-  //       )
-  //       .to(".bottom-comment", { y: -20, autoAlpha: 0, duration: 0.5 }, "<")
-  //       .to("#right-border", { height: 0, duration: 0.5 }, "<-0.3")
-  //       .to(
-  //         "#terminal-header",
-  //         {
-  //           autoAlpha: 0,
-  //           duration: 0.3,
-  //         },
-  //         ">",
-  //       )
-  //       .to(
-  //         ".terminal-line",
-  //         {
-  //           filter: "blur(4px)",
-  //           y: -60,
-  //           opacity: 0,
-  //           stagger: 0.06,
-  //           duration: 0.15,
-  //         },
-  //         "<0",
-  //       )
-  //       .to(
-  //         "#terminal-prompt",
-  //         {
-  //           filter: "blur(4px)",
-  //           y: -60,
-  //           opacity: 0,
-  //           stagger: 0.06,
-  //         },
-  //         "<0",
-  //       );
-  //   },
-  //   { scope: containerRef },
-  // );
+    tl.to({}, { duration: 0.1 });
+
+    tl.to(projectsArray, {
+      xPercent: -100 * (projectsArray.length - 1),
+      ease: "none",
+    });
+  });
 
   return (
     <div className="relative w-full">
@@ -301,8 +247,16 @@ export default function Home() {
         <Navbar />
         <Hero />
       </div>
-      <ProjectsShowcase />
-      <ProjectsShowcase />
+      <div
+        id="projects-scroll"
+        className="flex min-w-full items-start justify-start overflow-x-hidden"
+      >
+        <ProjectShowcase />
+        <ProjectShowcase />
+      </div>
+      <footer className="w-full border-t px-10 py-10">
+        Made with love by Joshua
+      </footer>
     </div>
   );
 }

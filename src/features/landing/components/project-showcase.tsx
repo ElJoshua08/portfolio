@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(SplitText);
 
-export const ProjectsShowcase = () => {
+export const ProjectShowcase = () => {
   const stageRef = useRef<HTMLDivElement>(null);
   const nOutlineRef = useRef<HTMLSpanElement>(null);
   const nFilledRef = useRef<HTMLDivElement>(null);
@@ -198,7 +198,17 @@ export const ProjectsShowcase = () => {
       }
 
       if (inside && nFilledRef.current && !isRevealing) {
-        const mask = `radial-gradient(circle 90px at ${fillX}px ${fillY}px, black 40px, #00000044 40px, #00000044 60px, transparent 60px, transparent 90px)`;
+        const mask = `radial-gradient(
+                        circle 200px at ${fillX}px ${fillY}px,
+                        #00000088 80px,
+                        #00000088 100px,
+                        #00000044 100px,
+                        #00000044 130px,
+                        #00000022 130px,
+                        #00000022 160px,
+                        transparent 160px,
+                        transparent 200px
+                      )`;
         nFilledRef.current.style.webkitMaskImage = mask;
         nFilledRef.current.style.maskImage = mask;
       }
@@ -220,7 +230,7 @@ export const ProjectsShowcase = () => {
   return (
     <div
       className={cn(
-        "bg-background relative z-10 flex h-screen min-h-screen w-full flex-col items-start justify-start overflow-hidden",
+        "project-showcase bg-background relative z-10 flex h-screen min-h-screen w-full shrink-0 flex-col items-start justify-start overflow-hidden",
         !revealed && "p-12",
       )}
     >
