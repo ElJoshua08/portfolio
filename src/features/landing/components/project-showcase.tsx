@@ -12,6 +12,9 @@ import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(SplitText);
 
+// TODO: Fix out animation
+// TODO: Scroll trigger should also affect header
+// TODO: Also the snap should occur a bit later and be smoother
 export const ProjectShowcase = ({
   project,
   index,
