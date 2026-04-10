@@ -3,6 +3,7 @@
 import { Hero } from "@/features/landing/components/hero";
 import { Navbar } from "@/features/landing/components/navbar";
 import { ProjectShowcase } from "@/features/landing/components/project-showcase";
+import { SHOWCASE_PROJECTS } from "@/features/landing/showcase-projects";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
@@ -251,8 +252,9 @@ export default function Home() {
         id="projects-scroll"
         className="flex min-w-full items-start justify-start overflow-x-hidden"
       >
-        <ProjectShowcase />
-        <ProjectShowcase />
+        {SHOWCASE_PROJECTS.map((project, idx) => (
+          <ProjectShowcase key={idx} project={project} index={idx} />
+        ))}
       </div>
       <footer className="w-full border-t px-10 py-10">
         Made with love by Joshua

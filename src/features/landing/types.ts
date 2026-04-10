@@ -15,3 +15,10 @@ export type TerminalLine = {
 export type TerminalType = {
   lines?: TerminalLine[];
 };
+
+export type ShowcaseProject = {
+  name: string;
+  punchline: string;
+  tagline: string;
+  thumbnail: string;
+};

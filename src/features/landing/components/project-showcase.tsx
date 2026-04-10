@@ -2,6 +2,7 @@
 "use client";
 
 import { TextBlur } from "@/components/ui/text-blur";
+import { ShowcaseProject } from "@/features/landing/types";
 import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -11,7 +12,13 @@ import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(SplitText);
 
-export const ProjectShowcase = () => {
+export const ProjectShowcase = ({
+  project,
+  index,
+}: {
+  project: ShowcaseProject;
+  index: number;
+}) => {
   const stageRef = useRef<HTMLDivElement>(null);
   const nOutlineRef = useRef<HTMLSpanElement>(null);
   const nFilledRef = useRef<HTMLDivElement>(null);
@@ -250,7 +257,7 @@ export const ProjectShowcase = () => {
                 Work
               </span>
               <span className="text-secondary-foreground absolute top-1/2 left-0 mt-8 ml-2 block -translate-y-1/2 font-bold">
-                // 01 - Projects
+                // {project.punchline}
               </span>
             </h1>
             <span className="text-accent-blue ml-auto">
@@ -281,7 +288,7 @@ export const ProjectShowcase = () => {
                 className="text-accent-blue text-[800px] leading-none font-thin select-none"
                 style={{ willChange: "transform" }}
               >
-                01
+                {`0${index + 1}`}
               </span>
             </div>
 
@@ -294,7 +301,7 @@ export const ProjectShowcase = () => {
                   willChange: "transform",
                 }}
               >
-                01
+                {`0${index + 1}`}
               </span>
             </div>
           </div>
@@ -304,7 +311,7 @@ export const ProjectShowcase = () => {
             className="relative h-full w-full overflow-hidden"
           >
             <Image
-              src="/landing3.webp"
+              src={project.thumbnail}
               alt="Stackd project"
               fill
               className="object-cover object-top"
@@ -330,12 +337,12 @@ export const ProjectShowcase = () => {
               <div className="flex flex-col gap-y-3">
                 <h1
                   id="project-name"
-                  className="font-header from-accent-blue via-accent-blue relative z-20 inline-block bg-linear-to-b to-[#111111] bg-clip-text text-8xl font-bold text-transparent"
+                  className="font-header from-accent-blue via-accent-blue to-accent-blue/50 relative z-20 inline-block bg-linear-to-b bg-clip-text text-8xl font-bold text-transparent"
                 >
-                  Stackd
+                  {project.name}
                 </h1>
                 <span className="font-header text-foreground z-30 -mt-10 text-3xl font-bold">
-                  Poker Tracker
+                  {project.tagline}
                 </span>
                 <p
                   id="project-desc"
@@ -344,20 +351,7 @@ export const ProjectShowcase = () => {
                   A real-time multiplayer poker tracker built to manage
                   sessions, track stats, and visualize your game over time.
                 </p>
-                <div className="mt-2 flex gap-x-3">
-                  <a
-                    href="#"
-                    className="project-link rounded border border-[#1a1a1a] px-3 py-1.5 font-mono text-xs text-[#333]"
-                  >
-                    [ github ]
-                  </a>
-                  <a
-                    href="#"
-                    className="project-link rounded border border-[#1a1a1a] px-3 py-1.5 font-mono text-xs text-[#333]"
-                  >
-                    [ live site ]
-                  </a>
-                </div>
+                <div className="mt-2 flex gap-x-3"></div>
               </div>
 
               <div className="flex flex-col items-end gap-y-2">
