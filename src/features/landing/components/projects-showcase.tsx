@@ -1,18 +1,90 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 "use client";
 
-import { Magnetic } from "@/components/ui/magnetic";
 import { TextBlur } from "@/components/ui/text-blur";
+import { cn } from "@/lib/utils";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { SplitText } from "gsap/all";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+gsap.registerPlugin(SplitText);
+
 export const ProjectsShowcase = () => {
-  const containerRef = useRef(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const nOutlineRef = useRef<HTMLSpanElement>(null);
   const nFilledRef = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
 
-  console.log(revealed, "Is revealed");
+  useGSAP(
+    () => {
+      if (!revealed) return;
+
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+      tl.fromTo(
+        "#revealed-container",
+        { autoAlpha: 0, scale: 1.04, filter: "blur(12px)" },
+        { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 1 },
+      );
+
+      tl.fromTo(
+        "#revealed-overlay",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.8 },
+        "<0.2",
+      );
+
+      tl.fromTo(
+        "#project-name",
+        { yPercent: 60, autoAlpha: 0 },
+        { yPercent: 0, autoAlpha: 1, duration: 0.7 },
+        "<0.2",
+      );
+
+      tl.fromTo(
+        ".project-tag",
+        { x: 16, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, stagger: 0.08 },
+        "<0.3",
+      );
+
+      tl.fromTo(
+        "#project-sub",
+        { y: 12, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5 },
+        "<0.3",
+      );
+
+      const descSplit = new SplitText("#project-desc", {
+        type: "words",
+        mask: "lines",
+      });
+
+      tl.fromTo(
+        descSplit.words,
+        { y: 16, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, stagger: 0.015 },
+        "<0.15",
+      );
+
+      tl.fromTo(
+        ".stack-line",
+        { x: -12, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.4, stagger: 0.07 },
+        "<0.2",
+      );
+
+      tl.fromTo(
+        ".project-link",
+        { y: 10, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, stagger: 0.08 },
+        "<0.2",
+      );
+    },
+    { dependencies: [revealed] },
+  );
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -58,27 +130,11 @@ export const ProjectsShowcase = () => {
 
       const filled = nFilledRef.current;
       const outline = nOutlineRef.current;
-
       if (!filled || !outline) return;
 
-      // expand mask to cover everything
       const diagonal = Math.sqrt(
         stage.offsetWidth ** 2 + stage.offsetHeight ** 2,
       );
-      filled.style.transition =
-        "mask-size 0.6s cubic-bezier(0.4, 0, 0.2, 1), -webkit-mask-size 0.6s cubic-bezier(0.4, 0, 0.2, 1)";
-
-      const expandMask = () => {
-        const mask = `radial-gradient(circle ${diagonal}px at ${fillX}px ${fillY}px, black ${diagonal}px, transparent ${diagonal}px)`;
-        filled.style.webkitMaskImage = mask;
-        filled.style.maskImage = mask;
-      };
-
-      // use a CSS transition on a custom property for the radius
-      filled.style.setProperty("--mask-x", `${fillX}px`);
-      filled.style.setProperty("--mask-y", `${fillY}px`);
-
-      // animate radius via keyframe
       const startRadius = 90;
       const endRadius = diagonal;
       const duration = 700;
@@ -86,7 +142,6 @@ export const ProjectsShowcase = () => {
 
       function animateMask(now: number) {
         if (!filled) return;
-
         const progress = Math.min((now - start) / duration, 1);
         const ease = 1 - Math.pow(1 - progress, 1.5);
         const radius = startRadius + (endRadius - startRadius) * ease;
@@ -97,17 +152,21 @@ export const ProjectsShowcase = () => {
         if (progress < 1) {
           requestAnimationFrame(animateMask);
         } else {
-          // mask fully expanded — scale out + blur + fade both layers
-          const exitDuration = "0.7s";
-          const exitEase = "cubic-bezier(0.4, 0, 0.2, 1)";
-
           [filled, outline].forEach((el) => {
             if (!el) return;
-
-            el.style.transition = `transform ${exitDuration} ${exitEase}, opacity ${exitDuration} ${exitEase}, filter ${exitDuration} ${exitEase}`;
+            el.style.transition =
+              "transform 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.7s cubic-bezier(0.4,0,0.2,1), filter 0.7s cubic-bezier(0.4,0,0.2,1)";
             el.style.transform = "scale(1.15)";
             el.style.opacity = "0";
             el.style.filter = "blur(20px)";
+          });
+
+          // header out
+          gsap.to("#showcase-header-out", {
+            y: -40,
+            autoAlpha: 0,
+            duration: 0.5,
+            ease: "power3.in",
           });
 
           setTimeout(() => setRevealed(true), 500);
@@ -124,7 +183,6 @@ export const ProjectsShowcase = () => {
 
     function tick() {
       if (!stage) return;
-
       currentX = lerp(currentX, mouseX, 0.07);
       currentY = lerp(currentY, mouseY, 0.07);
       fillX = lerp(fillX, mouseX, 0.1);
@@ -134,19 +192,15 @@ export const ProjectsShowcase = () => {
       const cy = stage.offsetHeight / 2;
 
       if (nOutlineRef.current && !isRevealing) {
-        const dx = (currentX - cx) * 0.045;
-        const dy = (currentY - cy) * 0.045;
-        nOutlineRef.current.style.transform = `translate(${dx}px, ${dy}px)`;
+        nOutlineRef.current.style.transform = `translate(${(currentX - cx) * 0.045}px, ${(currentY - cy) * 0.045}px)`;
       }
 
       if (nFilledRef.current && !isRevealing) {
-        const dx2 = (currentX - cx) * 0.025;
-        const dy2 = (currentY - cy) * 0.025;
-        nFilledRef.current.style.transform = `translate(${dx2}px, ${dy2}px)`;
+        nFilledRef.current.style.transform = `translate(${(currentX - cx) * 0.025}px, ${(currentY - cy) * 0.025}px)`;
       }
 
       if (inside && nFilledRef.current && !isRevealing) {
-        const mask = `radial-gradient(circle 90px at ${fillX}px ${fillY}px, black 90px, transparent 90px)`;
+        const mask = `radial-gradient(circle 90px at ${fillX}px ${fillY}px, black 40px, #00000044 40px, #00000044 60px, transparent 60px, transparent 90px)`;
         nFilledRef.current.style.webkitMaskImage = mask;
         nFilledRef.current.style.maskImage = mask;
       }
@@ -163,16 +217,20 @@ export const ProjectsShowcase = () => {
       stage.removeEventListener("mouseleave", onLeave);
       stage.removeEventListener("click", onClick);
     };
-  }, []);
+  }, [revealed]);
 
   return (
     <div
-      ref={containerRef}
-      className="bg-background relative z-10 flex h-screen min-h-screen w-full flex-col items-start justify-start overflow-hidden p-12"
+      className={cn(
+        "bg-background relative z-10 flex h-screen min-h-screen w-full flex-col items-start justify-start overflow-hidden",
+        !revealed && "p-12",
+      )}
     >
-      <header className="flex h-35 w-full items-center">
-        {!revealed ? (
-          <>
+      <header
+        className={cn("flex h-35 w-full items-center", revealed && "hidden")}
+      >
+        {!revealed && (
+          <div id="showcase-header-out" className="flex w-full items-center">
             <h1 className="relative inline-flex flex-col items-start justify-start gap-y-2">
               <TextBlur
                 className="from-foreground font-header via-foreground relative z-0 -mt-4 -ml-4 inline-block bg-linear-to-b to-[#11111] bg-clip-text p-6 text-8xl font-bold text-transparent"
@@ -180,37 +238,25 @@ export const ProjectsShowcase = () => {
               >
                 Selected
               </TextBlur>
-              <span className="text-accent-green font-header pointer-event-none peer z-10 -mt-18 ml-48 text-8xl font-bold select-none">
+              <span className="text-accent-green font-header z-10 -mt-18 ml-48 text-8xl font-bold select-none">
                 Work
               </span>
               <span className="text-secondary-foreground absolute top-1/2 left-0 mt-8 ml-2 block -translate-y-1/2 font-bold">
                 // 01 - Projects
               </span>
             </h1>
-            <Magnetic strength={1} className="ml-auto">
-              <span className="text-accent-blue">// ? Click to reveal...</span>
-            </Magnetic>
-          </>
-        ) : (
-          <h3 className="relative inline-flex flex-col items-start justify-start gap-y-2">
-            <TextBlur
-              className="from-accent-blue font-header via-accent-blue relative z-0 -mt-4 -ml-4 inline-block bg-linear-to-b to-[#11111] bg-clip-text p-6 text-7xl font-bold text-transparent"
-              blurSteps={8}
-            >
-              Stackd
-            </TextBlur>
-            <span className="absolute top-1/2 left-0 mt-6 ml-2 block -translate-y-1/2 text-2xl font-bold">
-              Poker Tracker
+            <span className="text-accent-blue ml-auto">
+              // ? Click to reveal...
             </span>
-          </h3>
+          </div>
         )}
       </header>
 
       <main className="flex h-full w-full grow items-center justify-center">
-        {!revealed && (
+        {!revealed ? (
           <div
             ref={stageRef}
-            className="relative h-full min-h-full w-full min-w-full overflow-hidden"
+            className="relative h-full w-full overflow-hidden"
           >
             <div
               ref={nFilledRef}
@@ -244,25 +290,93 @@ export const ProjectsShowcase = () => {
               </span>
             </div>
           </div>
-        )}
-
-        {revealed && (
+        ) : (
           <div
-            data-mouse="zoom"
-            className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-md border"
+            id="revealed-container"
+            className="relative h-full w-full overflow-hidden"
           >
             <Image
-              data-mouse="zoom"
-              src="/grain-lg.jpg"
-              alt="some alt"
+              src="/landing2.webp"
+              alt="Stackd project"
               fill
-              className="absolute h-full w-full object-cover"
+              className="object-cover object-top"
             />
+
+            <div
+              id="revealed-overlay"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
+              }}
+            />
+
+            <button
+              onClick={() => setRevealed(false)}
+              className="absolute top-4 left-4 rounded-md bg-black px-4 py-2 text-white"
+            >
+              Close that shit
+            </button>
+
+            <div className="absolute right-8 bottom-8 left-8 flex items-end justify-between">
+              <div className="flex flex-col gap-y-3">
+                <h1
+                  id="project-name"
+                  className="font-header from-accent-blue via-accent-blue relative z-20 inline-block bg-linear-to-b to-[#111111] bg-clip-text text-8xl font-bold text-transparent"
+                >
+                  Stackd
+                </h1>
+                <span className="font-header z-30 -mt-10 text-3xl font-bold text-white">
+                  Poker Tracker
+                </span>
+                <div id="project-sub" className="font-mono text-xs text-[#555]">
+                  poker tracker · Feb. 2026
+                </div>
+                <p
+                  id="project-desc"
+                  className="max-w-sm text-sm leading-relaxed text-[#666]"
+                >
+                  A real-time multiplayer poker tracker built to manage
+                  sessions, track stats, and visualize your game over time.
+                </p>
+                <div className="mt-2 flex gap-x-3">
+                  <a
+                    href="#"
+                    className="project-link rounded border border-[#1a1a1a] px-3 py-1.5 font-mono text-xs text-[#333]"
+                  >
+                    [ github ]
+                  </a>
+                  <a
+                    href="#"
+                    className="project-link rounded border border-[#1a1a1a] px-3 py-1.5 font-mono text-xs text-[#333]"
+                  >
+                    [ live site ]
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-end gap-y-2">
+                <div className="stack-line font-mono text-xs text-[#333]">
+                  <span>&gt; framework: </span>
+                  <span className="text-accent-green">Next.JS</span>
+                </div>
+                <div className="stack-line font-mono text-xs text-[#333]">
+                  <span>&gt; tools: </span>
+                  <span className="text-accent-blue">GSAP, Tailwind</span>
+                </div>
+                <div className="stack-line font-mono text-xs text-[#333]">
+                  <span>&gt; lang: </span>
+                  <span className="text-accent-green">TypeScript</span>
+                </div>
+                <div className="stack-line font-mono text-xs text-[#333]">
+                  <span>&gt; date: </span>
+                  <span className="text-[#555]">Feb. 2026</span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </main>
-
-      <footer className="hidden w-full items-center justify-between"></footer>
     </div>
   );
 };

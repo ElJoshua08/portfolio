@@ -53,7 +53,7 @@ const CONTACT: TerminalLine[] = [
 
 export const contact: Command = {
   name: "contact",
-  description: "Contact with me",
+  description: "Contact with me.",
   handler({ addLine }) {
     CONTACT.map(addLine);
   },

@@ -37,7 +37,7 @@ export const help: Command = {
         });
       }
     } else {
-      Object.entries(COMMANDS).forEach((obj, idx) => {
+      Object.entries(COMMANDS).forEach((obj) => {
         addLine({
           body: [
             {
