@@ -1,5 +1,6 @@
 import { clear } from "@/features/landing/commands/clear";
 import { contact } from "@/features/landing/commands/contact";
+import { echo } from "@/features/landing/commands/echo";
 import { help } from "@/features/landing/commands/help";
 import { resume } from "@/features/landing/commands/resume";
 import { skills } from "@/features/landing/commands/skills";
@@ -13,4 +14,5 @@ export const COMMANDS: Record<string, Command> = {
   resume,
   skills,
   contact,
+  echo,
 };

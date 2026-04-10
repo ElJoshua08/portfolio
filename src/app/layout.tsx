@@ -35,7 +35,7 @@ export default function RootLayout({
         "font-mono",
       )}
     >
-      <body className="flex min-h-full flex-col">
+      <body>
         {children}
 
         <Cursor />

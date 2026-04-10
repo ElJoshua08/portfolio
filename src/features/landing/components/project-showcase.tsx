@@ -19,6 +19,7 @@ export const ProjectShowcase = ({
   project: ShowcaseProject;
   index: number;
 }) => {
+  const projectRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const nOutlineRef = useRef<HTMLSpanElement>(null);
   const nFilledRef = useRef<HTMLDivElement>(null);
@@ -31,37 +32,23 @@ export const ProjectShowcase = ({
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
       tl.fromTo(
-        "#revealed-container",
+        ".revealed-container",
         { autoAlpha: 0, scale: 1.04, filter: "blur(12px)" },
         { autoAlpha: 1, scale: 1, filter: "blur(0px)", duration: 1 },
       );
 
       tl.fromTo(
-        "#revealed-overlay",
+        ".revealed-overlay",
         { opacity: 0 },
         { opacity: 1, duration: 0.8 },
         "<0.2",
       );
 
       tl.fromTo(
-        "#project-name",
+        ".project-name",
         { yPercent: 60, autoAlpha: 0 },
         { yPercent: 0, autoAlpha: 1, duration: 0.7 },
         "<0.2",
-      );
-
-      tl.fromTo(
-        ".project-tag",
-        { x: 16, autoAlpha: 0 },
-        { x: 0, autoAlpha: 1, duration: 0.5, stagger: 0.08 },
-        "<0.3",
-      );
-
-      tl.fromTo(
-        "#project-sub",
-        { y: 12, autoAlpha: 0 },
-        { y: 0, autoAlpha: 1, duration: 0.5 },
-        "<0.3",
       );
 
       const descSplit = new SplitText("#project-desc", {
@@ -90,7 +77,7 @@ export const ProjectShowcase = ({
         "<0.2",
       );
     },
-    { dependencies: [revealed] },
+    { scope: projectRef, dependencies: [revealed] },
   );
 
   useEffect(() => {
@@ -236,6 +223,7 @@ export const ProjectShowcase = ({
 
   return (
     <div
+      ref={projectRef}
       className={cn(
         "project-showcase bg-background relative z-10 flex h-screen min-h-screen w-full shrink-0 flex-col items-start justify-start overflow-hidden",
         !revealed && "p-12",
@@ -245,7 +233,7 @@ export const ProjectShowcase = ({
         className={cn("flex h-35 w-full items-center", revealed && "hidden")}
       >
         {!revealed && (
-          <div id="showcase-header-out" className="flex w-full items-center">
+          <div className="showcase-header-out flex w-full items-center">
             <h1 className="relative inline-flex flex-col items-start justify-start gap-y-2">
               <TextBlur
                 className="from-foreground font-header via-foreground relative z-0 -mt-4 -ml-4 inline-block bg-linear-to-b to-[#11111] bg-clip-text p-6 text-8xl font-bold text-transparent"
@@ -285,7 +273,7 @@ export const ProjectShowcase = ({
               }}
             >
               <span
-                className="text-accent-blue text-[800px] leading-none font-thin select-none"
+                className="text-accent-blue text-[800px] leading-none font-bold select-none"
                 style={{ willChange: "transform" }}
               >
                 {`0${index + 1}`}
@@ -295,9 +283,9 @@ export const ProjectShowcase = ({
             <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
               <span
                 ref={nOutlineRef}
-                className="text-[800px] leading-none font-thin text-transparent select-none"
+                className="text-[800px] leading-none font-bold text-transparent select-none"
                 style={{
-                  WebkitTextStroke: "3px #36184d",
+                  WebkitTextStroke: "2px #36184d",
                   willChange: "transform",
                 }}
               >
@@ -306,10 +294,7 @@ export const ProjectShowcase = ({
             </div>
           </div>
         ) : (
-          <div
-            id="revealed-container"
-            className="relative h-full w-full overflow-hidden"
-          >
+          <div className="revealed-container relative h-full w-full overflow-hidden">
             <Image
               src={project.thumbnail}
               alt="Stackd project"
@@ -318,8 +303,7 @@ export const ProjectShowcase = ({
             />
 
             <div
-              id="revealed-overlay"
-              className="absolute inset-0"
+              className="revealed-overlay absolute inset-0"
               style={{
                 background:
                   "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
@@ -335,10 +319,7 @@ export const ProjectShowcase = ({
 
             <div className="absolute right-8 bottom-8 left-8 flex items-end justify-between">
               <div className="flex flex-col gap-y-3">
-                <h1
-                  id="project-name"
-                  className="font-header from-accent-blue via-accent-blue to-accent-blue/50 relative z-20 inline-block bg-linear-to-b bg-clip-text text-8xl font-bold text-transparent"
-                >
+                <h1 className="project-name font-header from-accent-blue via-accent-blue to-accent-blue/50 relative z-20 inline-block bg-linear-to-b bg-clip-text text-8xl font-bold text-transparent">
                   {project.name}
                 </h1>
                 <span className="font-header text-foreground z-30 -mt-10 text-3xl font-bold">
