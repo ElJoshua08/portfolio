@@ -21,4 +21,5 @@ export type ShowcaseProject = {
   punchline: string;
   tagline: string;
   thumbnail: string;
+  description: string;
 };

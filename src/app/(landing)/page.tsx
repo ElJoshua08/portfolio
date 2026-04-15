@@ -10,7 +10,6 @@ import { SlowMo } from "gsap/EasePack";
 
 gsap.registerPlugin(SplitText, SlowMo);
 
-
 // TODO: When page changes everything dissapears
 export default function Home() {
   useGSAP(() => {

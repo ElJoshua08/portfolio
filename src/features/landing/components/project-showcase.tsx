@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
+import { XIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -54,7 +55,7 @@ export const ProjectShowcase = ({
         "<0.2",
       );
 
-      const descSplit = new SplitText("#project-desc", {
+      const descSplit = new SplitText(".project-desc", {
         type: "words",
         mask: "lines",
       });
@@ -158,7 +159,7 @@ export const ProjectShowcase = ({
             el.style.filter = "blur(20px)";
           });
 
-          gsap.to("#showcase-header-out", {
+          gsap.to(".showcase-header-out", {
             scaleY: 0,
             duration: 0.4,
             ease: "power3.in",
@@ -239,7 +240,7 @@ export const ProjectShowcase = ({
           <div className="showcase-header-out flex w-full items-center">
             <h1 className="relative inline-flex flex-col items-start justify-start gap-y-2">
               <TextBlur
-                className="from-foreground font-header via-foreground relative z-0 -mt-4 -ml-4 inline-block bg-linear-to-b to-[#11111] bg-clip-text p-6 text-8xl font-bold text-transparent"
+                className="from-foreground font-header via-foreground relative z-0 -mt-4 -ml-4 inline-block bg-linear-to-b to-[#111111] bg-clip-text p-6 text-8xl font-bold text-transparent"
                 blurSteps={8}
               >
                 Selected
@@ -315,9 +316,9 @@ export const ProjectShowcase = ({
 
             <button
               onClick={() => setRevealed(false)}
-              className="absolute top-4 left-4 rounded-md bg-black px-4 py-2 text-white"
+              className="absolute top-4 right-4 aspect-square rounded-none bg-black px-4 py-2 text-white"
             >
-              Close that shit
+              <XIcon />
             </button>
 
             <div className="absolute right-8 bottom-8 left-8 flex items-end justify-between">
@@ -328,30 +329,25 @@ export const ProjectShowcase = ({
                 <span className="font-header text-foreground z-30 -mt-10 text-3xl font-bold">
                   {project.tagline}
                 </span>
-                <p
-                  id="project-desc"
-                  className="text-foreground/75 max-w-sm text-sm leading-relaxed tracking-wide"
-                >
-                  A real-time multiplayer poker tracker built to manage
-                  sessions, track stats, and visualize your game over time.
+                <p className="project-desc text-foreground/75 max-w-sm text-sm leading-relaxed tracking-wide">
+                  {project.description}
                 </p>
-                <div className="mt-2 flex gap-x-3"></div>
               </div>
 
               <div className="flex flex-col items-end gap-y-2">
-                <div className="stack-line font-mono text-xs text-[#333]">
+                <div className="stack-line font-mono text-xs text-[#999]">
                   <span>&gt; framework: </span>
                   <span className="text-accent-green">Next.JS</span>
                 </div>
-                <div className="stack-line font-mono text-xs text-[#333]">
+                <div className="stack-line font-mono text-xs text-[#999]">
                   <span>&gt; tools: </span>
                   <span className="text-accent-blue">GSAP, Tailwind</span>
                 </div>
-                <div className="stack-line font-mono text-xs text-[#333]">
+                <div className="stack-line font-mono text-xs text-[#999]">
                   <span>&gt; lang: </span>
                   <span className="text-accent-green">TypeScript</span>
                 </div>
-                <div className="stack-line font-mono text-xs text-[#333]">
+                <div className="stack-line font-mono text-xs text-[#999]">
                   <span>&gt; date: </span>
                   <span className="text-[#555]">Feb. 2026</span>
                 </div>
