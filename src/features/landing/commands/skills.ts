@@ -2,7 +2,6 @@ import { Command } from "@/features/landing/commands/types";
 import { BLANK_LINE } from "@/features/landing/constants";
 import { TerminalLine } from "@/features/landing/types";
 
-// TODO: fix this styling
 const SKILLS: TerminalLine[] = [
   // Languages
   BLANK_LINE,

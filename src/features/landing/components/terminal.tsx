@@ -29,8 +29,6 @@ const terminalContext = createContext<TerminalContextType>({
 
 export const useTerminal = () => useContext(terminalContext);
 
-// TODO: All this must be animated.
-
 export const Terminal = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [terminal, setTerminal] = useState<TerminalType>({
@@ -46,7 +44,9 @@ export const Terminal = () => {
 
   const reset = () => {
     setTerminal({ lines: undefined });
-    inputRef.current ? (inputRef.current.value = "") : "";
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
 
   const focusInput = () => inputRef.current?.focus();
@@ -178,8 +178,6 @@ const TerminalPrompt = () => {
 
     inputRef.current!.value = "";
   }
-
-  // TODO: now we actually need a command system. (now idea how to implement it now.)
 
   return (
     <div id="terminal-prompt" className="invisible flex w-full items-center">
