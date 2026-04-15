@@ -54,7 +54,7 @@ export default function Home() {
           <ProjectShowcase key={idx} project={project} index={idx} />
         ))}
       </div>
-      {/* <footer className="w-full border-t px-10 py-10">
+      <footer className="w-full border-t px-10 py-10">
         <div className="flex flex-col items-start justify-center gap-y-2">
           <span className="text-foreground/85 font-header text-lg">
             Wanna now how this was made?
@@ -66,7 +66,7 @@ export default function Home() {
             Take a look at it&apos;s code
           </a>
         </div>
-      </footer> */}
+      </footer>
     </>
   );
 }
